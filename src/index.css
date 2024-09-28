@@ -8,3 +8,19 @@
 .description{
     @apply text-sm md:text-[18px] text-[#03071299] w-full md:w-1/2 leading-[140%]
 }
+
+/* Navbar style  */
+@keyframes pulse-scale {
+  0% {
+    transform: scale(0.95);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(0.95);
+  }
+}
+.animate-pulse-scale {
+  animation: pulse-scale 2s infinite 300ms;
+}
