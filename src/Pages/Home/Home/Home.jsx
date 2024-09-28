@@ -1,11 +1,11 @@
-import BasicHeader from "../../Shared-file/BasicHeader";
+import Service from "../Service/Service";
 
 const Home = () => {
 
     return (
         <section>
             <p>Home</p>
-            <BasicHeader/>
+            <Service/>
         </section>
     );
 };
