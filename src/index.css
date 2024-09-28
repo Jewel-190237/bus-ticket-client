@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.heading{
+    @apply text-center text-[20px] md:text-[30px] lg:text-4xl xl:text-5xl text-[#030712] font-bold
+}
+.description{
+    @apply text-sm md:text-[18px] text-[#03071299] w-full md:w-1/2 leading-[140%]
+}
