@@ -4,7 +4,7 @@
 const ServiceCard = ({ img, restTime, availableSeat }) => {
     return (
         <div className='shadow-xl rounded-md w-full'>
-            <img src={img} className='' alt="BRTC Image 1" />
+            <img src={img} className='rounded-md' alt="BRTC Image 1" />
             <div className='my-8 space-y-6 px-6'>
                 <div className='bg-[#0307120D] rounded-xl'>
                     <p className='card-description py-4 text-center mx-auto'>Rest Time - {restTime}</p>
