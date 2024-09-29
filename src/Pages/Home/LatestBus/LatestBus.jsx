@@ -1,4 +1,4 @@
-import BasicHeader from "../../Shared-file/BasicHeader";
+import BasicHeader from "../../Shared-file/SectionHeader";
 import { LuBus } from "react-icons/lu";
 import { TbArmchair } from "react-icons/tb";
 import { TbCoinTakaFilled } from "react-icons/tb";

@@ -1,5 +1,5 @@
 import ServiceCard from '../../Card/ServiceCard';
-import BasicHeader from '../../Shared-file/BasicHeader';
+import BasicHeader from '../../Shared-file/SectionHeader';
 import card1 from '../../../assets/service/card1.png';
 import card2 from '../../../assets/service/card2.png';
 const serviceData = [
@@ -20,7 +20,7 @@ const serviceData = [
 
 const LatestService = () => {
     return (
-        <section className='bus-container '>
+        <section className='bus-container'>
             <BasicHeader
                 heading="BRTC Bus Service"
                 description="BRTC Paribahan delivers reliable bus services with a focus on comfort and safety, ensuring seamless travel to your destinations"

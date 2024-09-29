@@ -6,6 +6,7 @@ import Main from "../Layout/Main";
 import Home from "../Pages/Home/Home/Home";
 import Login from "../Authentication/Login/Login";
 import SignUp from "../Authentication/SignUp/SignUp";
+import Service from "../Pages/Service/Service";
 // import Register from "../Authentication/Register";
 // import Dashboard from "../Layout/Dashboard";
 // import PrivateRoute from "../Providers/PrivateRoute"
@@ -42,10 +43,10 @@ export const router = createBrowserRouter([
         path: '/signup',
         element: <SignUp/>
       },
-      // {
-      //   path: '/availableCamp',
-      //   element: <AvailableCamp></AvailableCamp>
-      // },
+      {
+        path: '/service',
+        element: <Service/>
+      },
       // {
       //   path: '/campDetails/:id',
       //   element: <PrivateRoute> <CampDetails></CampDetails></PrivateRoute>,

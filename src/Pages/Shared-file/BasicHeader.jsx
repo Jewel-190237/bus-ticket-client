@@ -1,10 +1,15 @@
-// eslint-disable-next-line react/prop-types
-const BasicHeader = ({heading, description}) => {
+/* eslint-disable react/prop-types */
+import headerImage from '../../assets/header.png';
+
+const BasicHeader = ({ heading }) => {
     return (
-        <div className='mx-auto px-3 md:px-4'>
-            <h1 className='heading'>{heading}</h1>
-            <p className='description text-center mt-4 w-full md:w-1/2 mx-auto'>{description}</p>
-        </div>
+        <section 
+            className="relative w-full h-[250px] flex items-center justify-center bg-cover bg-center"
+            style={{ backgroundImage: `url(${headerImage})` }}
+        >
+            <div className="absolute inset-0 bg-black opacity-90" />
+            <h2 className="relative text-3xl md:text-4xl lg:text-5xl font-bold capitalize text-white"> {heading} </h2>
+        </section>
     );
 };
 
