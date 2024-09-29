@@ -15,22 +15,32 @@ const serviceData = [
         availableSeat: 40,
         image: card2
     },
+    
 ];
 
 const Service = () => {
     return (
-        <section className='max-w-[1320px] mx-auto px-8 md:px-2 lg:px-0'>
+        <section className='bus-container'>
             <BasicHeader
-                heading="BRTC Service"
+                heading="BRTC Bus Service"
                 description="BRTC Paribahan delivers reliable bus services with a focus on comfort and safety, ensuring seamless travel to your destinations"
             />
-            <div className='flex flex-col md:flex-row mt-24 w-full gap-10'>
-                {
-                    serviceData.map((service) => (
-                        <ServiceCard key={service._id} restTime={service.restTime} availableSeat={service.availableSeat} img={service.image} />
-                    ))
-                }
-            </div>
+            {serviceData.length == 2 ?
+                <div className='flex flex-col md:flex-row mt-24 w-full gap-10'>
+                    {
+                        serviceData.map((service) => (
+                            <ServiceCard key={service._id} restTime={service.restTime} availableSeat={service.availableSeat} img={service.image} />
+                        ))
+                    }
+                </div> :
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  mt-20 w-full gap-8'>
+                    {
+                        serviceData.map((service) => (
+                            <ServiceCard key={service._id} restTime={service.restTime} availableSeat={service.availableSeat} img={service.image} />
+                        ))
+                    }
+                </div>
+            }
         </section>
     );
 };

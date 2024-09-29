@@ -13,6 +13,9 @@
 .card-description {
     @apply text-[20px] text-[#030712CC]
 }
+.bus-container{
+    @apply max-w-[1320px] mx-auto px-8 md:px-2 lg:px-0
+}
 
 /* Navbar style  */
 @keyframes pulse-scale {
@@ -41,7 +44,7 @@
     background-color: #E67529;
     padding-bottom: 14px;
     font-size: 18px;
-    font-weight: 500;
+    font-weight: 800;
     border-radius: 0.75rem;
     border: 1px solid #E67529;
 }
