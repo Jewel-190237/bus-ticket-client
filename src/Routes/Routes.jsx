@@ -4,7 +4,8 @@ import {
 
 import Main from "../Layout/Main";
 import Home from "../Pages/Home/Home/Home";
-// import Login from "../Authentication/Login";
+import Login from "../Authentication/Login/Login";
+import SignUp from "../Authentication/SignUp/SignUp";
 // import Register from "../Authentication/Register";
 // import Dashboard from "../Layout/Dashboard";
 // import PrivateRoute from "../Providers/PrivateRoute"
@@ -33,14 +34,14 @@ export const router = createBrowserRouter([
         path: '/',
         element: <Home></Home>
       },
-      // {
-      //   path: '/login',
-      //   element: <Login></Login>
-      // },
-      // {
-      //   path: '/register',
-      //   element: <Register></Register>
-      // },
+      {
+        path: '/login',
+        element: <Login/>
+      },
+      {
+        path: '/signup',
+        element: <SignUp/>
+      },
       // {
       //   path: '/availableCamp',
       //   element: <AvailableCamp></AvailableCamp>

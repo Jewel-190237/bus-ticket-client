@@ -5,6 +5,7 @@
 .heading {
     @apply text-center text-[20px] md:text-[30px] lg:text-4xl xl:text-5xl text-[#030712] font-bold
 }
+
 .heading2 {
     @apply text-center text-[20px] md:text-2xl xl:text-3xl text-[#030712] font-bold
 }
@@ -16,10 +17,12 @@
 .card-description {
     @apply text-[20px] text-[#030712CC]
 }
-.bus-container{
+
+.bus-container {
     @apply max-w-[1320px] mx-auto px-8 md:px-2 lg:px-0 mt-16 md:mt-24 lg:mt-32
 }
-.section-gap{
+
+.section-gap {
     @apply mt-14 md:mt-20 lg:mt-24
 }
 
@@ -54,6 +57,59 @@
     border-radius: 0.75rem;
     border: 1px solid #E67529;
 }
+
 .button:hover {
     transform: scale(1.05);
+}
+
+.login-form {
+    .ant-row {
+        display: block;
+    }
+
+    .ant-form-item {
+        margin-bottom: 0;
+    }
+
+    .ant-form-item .ant-form-item-label {
+        text-align: left;
+        padding-bottom: 8px;
+    }
+
+    .ant-form-item .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::after {
+        display: inline-block;
+        margin-inline-end: 4px;
+        color: #ff4d4f;
+        font-size: 14px;
+        font-family: SimSun, sans-serif;
+        line-height: 1;
+        content: "*";
+    }
+
+    .ant-form-item .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+        content: "";
+    }
+
+    .ant-form-item .ant-form-item-label>label {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        max-width: 100%;
+        height: 7px;
+        color: rgba(0, 0, 0, 0.88);
+        font-size: 17px;
+    }
+
+    :focus {
+        border-color: #000000;
+        box-shadow: none;
+    }
+
+    /* Change hover border color to black for Ant Design input */
+    .ant-input:hover,
+    .ant-input-password:hover,
+    .ant-input-affix-wrapper:hover {
+        border-color: black !important;
+    }
+
 }
