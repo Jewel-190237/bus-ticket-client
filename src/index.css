@@ -5,6 +5,9 @@
 .heading {
     @apply text-center text-[20px] md:text-[30px] lg:text-4xl xl:text-5xl text-[#030712] font-bold
 }
+.heading2 {
+    @apply text-center text-[20px] md:text-2xl xl:text-3xl text-[#030712] font-bold
+}
 
 .description {
     @apply text-sm md:text-[18px] text-[#03071299] w-full md:w-1/2 leading-[140%]
@@ -14,7 +17,10 @@
     @apply text-[20px] text-[#030712CC]
 }
 .bus-container{
-    @apply max-w-[1320px] mx-auto px-8 md:px-2 lg:px-0
+    @apply max-w-[1320px] mx-auto px-8 md:px-2 lg:px-0 mt-16 md:mt-24 lg:mt-32
+}
+.section-gap{
+    @apply mt-14 md:mt-20 lg:mt-24
 }
 
 /* Navbar style  */
