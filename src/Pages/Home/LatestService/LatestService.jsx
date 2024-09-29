@@ -18,7 +18,7 @@ const serviceData = [
 
 ];
 
-const Service = () => {
+const LatestService = () => {
     return (
         <section className='bus-container '>
             <BasicHeader
@@ -47,4 +47,4 @@ const Service = () => {
     );
 };
 
-export default Service;
+export default LatestService;

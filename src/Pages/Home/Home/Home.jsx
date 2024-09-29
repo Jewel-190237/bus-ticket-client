@@ -1,13 +1,13 @@
 import LatestBus from "../LatestBus/LatestBus";
-import Service from "../Service/Service";
+import LatestService from "../LatestService/LatestService";
 
 const Home = () => {
 
     return (
         <section>
-            <p>Home</p>
+            <p>Home page</p>
             <LatestBus/>
-            <Service/>
+            <LatestService/>
         </section>
     );
 };
