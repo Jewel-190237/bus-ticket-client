@@ -13,7 +13,7 @@ const Footer = () => {
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20'>
                     <div className='w-full'>
                         <div className="flex items-center">
-                            <img className=' mx-auto rounded-full w-32 h-32 border' src={logo} alt='logo'  />
+                            <img className=' mx-auto rounded-full w-32 h-32 border border-primary' src={logo} alt='logo'  />
                         </div>
                         <p className='mt-[10px]  font-normal text-[16px] text-center text-[#2B2B2B]'>A straightforward platform for seamless bus ticket booking</p>
                         <div className="flex justify-center gap-6 mt-[20px] w-full">

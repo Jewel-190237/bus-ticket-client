@@ -92,3 +92,15 @@
         border-color: black !important;
     }
 }
+.ticket-header{
+    @apply text-xl md:text-2xl capitalize font-semibold text-[#030712] border-dashed border-b border-black py-5
+}
+.seat{
+    @apply bg-[#E675291A] border border-primary h-10 w-14 md:h-10 md:w-20 lg:h-20 lg:w-40 rounded-md flex items-center justify-center
+}
+.seat-text{
+    @apply text-[#E67529] text-[16px] lg:text-2xl font-extrabold
+}
+.select-seat{
+    @apply bg-[#E675291A] border border-primary h-12 w-28 md:h-16 md:w-32  lg:h-20 lg:w-56 rounded-md flex items-center justify-center text-[#E67529] text-[16px] lg:text-2xl font-extrabold
+}
