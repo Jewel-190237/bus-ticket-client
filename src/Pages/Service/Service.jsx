@@ -10,9 +10,33 @@ import { Form, Input } from "antd";
 const Service = () => {
     const [activeSeats, setActiveSeats] = useState([]);
     const [inputValue, setInputValue] = useState('');
-    const [discount, setDiscount] = useState(0); // State for the discount amount
+    const [discount, setDiscount] = useState(0);
     const [form] = Form.useForm();
-    const seatPrice = 900; // Fixed seat price
+    const seatPrice = 900;
+    const leftSites = [
+        'A1', 'A2',
+        'B1', 'B2',
+        'C1', 'C2',
+        'D1', 'D2',
+        'E1', 'E2',
+        'F1', 'F2',
+        'G1', 'G2',
+        'H1', 'H2',
+        'I1', 'I2',
+        'J1', 'J2'
+    ];
+    const rightSeats = [
+        'A3', 'A4',
+        'B3', 'B4',
+        'C3', 'C4',
+        'D3', 'D4',
+        'E3', 'E4',
+        'F3', 'F4',
+        'G3', 'G4',
+        'H3', 'H4',
+        'I3', 'I4',
+        'J3', 'J4'
+    ];
 
     const handleChange = (e) => {
         setInputValue(e.target.value);
@@ -31,17 +55,19 @@ const Service = () => {
         if (!isNaN(discountValue) && discountValue > 0) {
             setDiscount(discountValue);
         } else {
-            setDiscount(0); // Reset discount if the input is invalid
+            setDiscount(0); 
         }
-        setInputValue(''); // Clear the input field after applying
+        setInputValue('');
     };
 
-    // Calculate total price based on selected seats
     const totalPrice = activeSeats.length * seatPrice;
 
-    // Calculate grand total after applying the discount
     const grandTotal = totalPrice - discount;
 
+    const onFinish = (values) => {
+        console.log(values, grandTotal, activeSeats);
+        form.resetFields();
+    };
     return (
         <div>
             <BasicHeader heading='Service' />
@@ -62,29 +88,23 @@ const Service = () => {
                         </div>
                     </div>
                     <div className="flex items-center justify-between py-5">
-                        <div className="seat"> <GiBusDoors className="seat-text !text-4xl" /></div>
+                        <div className="seat"> <GiBusDoors className="seat-text !text-2xl md:!text-3xl lg:!text-4xl" /></div>
                         <div className="seat"> <LuChevronUpCircle className="seat-text !text-4xl" /></div>
                     </div>
                     <div className="flex items-center justify-between mt-6 md:mt-10">
                         <div className="grid grid-cols-2 gap-3 md:gap-6">
-                            <button onClick={() => handleClick('A1')} className={`seat seat-text ${activeSeats.includes('A1') ? '!bg-primary !text-white' : ''}`}> A1 </button>
-                            <button onClick={() => handleClick('A2')} className={`seat seat-text ${activeSeats.includes('A2') ? '!bg-primary !text-white' : ''}`}> A2 </button>
-                            <button onClick={() => handleClick('B1')} className={`seat seat-text ${activeSeats.includes('B1') ? '!bg-primary !text-white' : ''}`}> B1 </button>
-                            <button onClick={() => handleClick('B2')} className={`seat seat-text ${activeSeats.includes('B2') ? '!bg-primary !text-white' : ''}`}> B2 </button>
-                            <button onClick={() => handleClick('C1')} className={`seat seat-text ${activeSeats.includes('C1') ? '!bg-primary !text-white' : ''}`}> C1 </button>
-                            <button onClick={() => handleClick('C2')} className={`seat seat-text ${activeSeats.includes('C2') ? '!bg-primary !text-white' : ''}`}> C2 </button>
-                            <button onClick={() => handleClick('D1')} className={`seat seat-text ${activeSeats.includes('D1') ? '!bg-primary !text-white' : ''}`}> D1 </button>
-                            <button onClick={() => handleClick('D2')} className={`seat seat-text ${activeSeats.includes('D2') ? '!bg-primary !text-white' : ''}`}> D2 </button>
+                            {leftSites.map((seat, index) => (
+                                <button key={index} onClick={() => handleClick(seat)} className={`seat seat-text ${activeSeats.includes(seat) ? '!bg-primary !text-white' : ''}`}>
+                                    {seat}
+                                </button>
+                            ))}
                         </div>
                         <div className="grid grid-cols-2 gap-3 md:gap-6">
-                            <button onClick={() => handleClick('A3')} className={`seat seat-text ${activeSeats.includes('A3') ? '!bg-primary !text-white' : ''}`}> A3 </button>
-                            <button onClick={() => handleClick('A4')} className={`seat seat-text ${activeSeats.includes('A4') ? '!bg-primary !text-white' : ''}`}> A4 </button>
-                            <button onClick={() => handleClick('B3')} className={`seat seat-text ${activeSeats.includes('B3') ? '!bg-primary !text-white' : ''}`}> B3 </button>
-                            <button onClick={() => handleClick('B4')} className={`seat seat-text ${activeSeats.includes('B4') ? '!bg-primary !text-white' : ''}`}> B4 </button>
-                            <button onClick={() => handleClick('C3')} className={`seat seat-text ${activeSeats.includes('C3') ? '!bg-primary !text-white' : ''}`}> C3 </button>
-                            <button onClick={() => handleClick('C4')} className={`seat seat-text ${activeSeats.includes('C4') ? '!bg-primary !text-white' : ''}`}> C4 </button>
-                            <button onClick={() => handleClick('D3')} className={`seat seat-text ${activeSeats.includes('D3') ? '!bg-primary !text-white' : ''}`}> D3 </button>
-                            <button onClick={() => handleClick('D4')} className={`seat seat-text ${activeSeats.includes('D4') ? '!bg-primary !text-white' : ''}`}> D4 </button>
+                            {rightSeats.map((seat, index) => (
+                                <button key={index} onClick={() => handleClick(seat)} className={`seat seat-text ${activeSeats.includes(seat) ? '!bg-primary !text-white' : ''}`}>
+                                    {seat}
+                                </button>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -96,8 +116,6 @@ const Service = () => {
                                 <p className="description !text-[#030712]">Seat</p>
                                 <p className="description !text-[#030712] !text-right">Price</p>
                             </div>
-
-                            {/* Dynamically Render Selected Seats */}
                             {activeSeats.map((seat, index) => (
                                 <div key={seat} className={`py-6 flex items-center justify-between ${index === activeSeats.length - 1 ? 'border-b border-dashed border-[#03071233]' : ''}`}>
                                     <p className="description">{seat}</p>
@@ -105,7 +123,6 @@ const Service = () => {
                                 </div>
                             ))}
 
-                            {/* Total Price */}
                             <div className="py-6 flex items-center justify-between">
                                 <p className="description !text-[#030712]">Total</p>
                                 <p className="description !text-[#030712] !text-right">{totalPrice} BDT</p>
@@ -120,7 +137,7 @@ const Service = () => {
                                     onChange={handleChange}
                                 />
                                 <button
-                                    className={`p-3 bg-primary text-white rounded-r-xl ${!inputValue ? 'opacity-40 cursor-not-allowed' : ''}`}
+                                    className={`p-4 bg-primary text-white rounded-r-xl ${!inputValue ? 'opacity-40 cursor-not-allowed' : ''}`}
                                     onClick={applyDiscount} // Call the function on button click
                                     disabled={!inputValue}
                                 >
@@ -134,6 +151,47 @@ const Service = () => {
                                 <p className="description !text-[#030712] !text-right">{grandTotal >= 0 ? grandTotal : 0} BDT</p>
                             </div>
                         </div>
+                        <div className="login-form mt-4 md:mt-8">
+                            <Form className="space-y-4" onFinish={onFinish} form={form}>
+                                <Form.Item
+                                    label="Name: "
+                                    name="name"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please input your Name!',
+                                        },
+                                    ]}
+                                >
+                                    <Input placeholder='Input your Name' type="text" className="p-4" />
+                                </Form.Item>
+                                <Form.Item
+                                    label="Phone Number: "
+                                    name="phone"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please input your Phone Number!',
+                                        },
+                                    ]}
+                                >
+                                    <Input placeholder='Input your Phone Number' type="number" className="p-4" />
+                                </Form.Item>
+                                <Form.Item
+                                    label="Counter Location: "
+                                    name="location"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please input your Counter Location!',
+                                        },
+                                    ]}
+                                >
+                                    <Input placeholder='Input your Counter Location' type="text" className="p-4" />
+                                </Form.Item>
+                                <button type="submit" className="button w-full !mt-10 !rounded-md">Continue</button>
+                            </Form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -142,5 +200,3 @@ const Service = () => {
 };
 
 export default Service;
-
-
