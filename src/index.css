@@ -91,16 +91,28 @@
     .ant-input-affix-wrapper:hover {
         border-color: black !important;
     }
+
+    .ant-otp {
+        @apply flex items-center justify-between space-x-2 md:space-x-4 lg:space-x-8
+    }
+
+    .ant-otp .ant-otp-input {
+        @apply text-center p-2 md:p-4 lg:p-5
+    }
 }
-.ticket-header{
+
+.ticket-header {
     @apply text-xl md:text-2xl capitalize font-semibold text-[#030712] border-dashed border-b border-black py-5
 }
-.seat{
+
+.seat {
     @apply bg-[#E675291A] border border-primary h-10 w-14 md:h-10 md:w-20 lg:h-20 lg:w-40 rounded-md flex items-center justify-center
 }
-.seat-text{
+
+.seat-text {
     @apply text-[#E67529] text-[16px] lg:text-2xl font-extrabold
 }
-.select-seat{
-    @apply bg-[#E675291A] border border-primary h-12 w-28 md:h-16 md:w-32  lg:h-20 lg:w-56 rounded-md flex items-center justify-center text-[#E67529] text-[16px] lg:text-2xl font-extrabold
+
+.select-seat {
+    @apply bg-[#E675291A] border border-primary h-12 w-28 md:h-16 md:w-32 lg:h-20 lg:w-56 rounded-md flex items-center justify-center text-[#E67529] text-[16px] lg:text-2xl font-extrabold
 }
