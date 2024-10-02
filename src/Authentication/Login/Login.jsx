@@ -50,6 +50,13 @@ const Login = () => {
                     text: 'The role does not match. Please select the correct role.'
                 });
             }
+            else if (error.response && error.response.status === 402) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'User Not Found',
+                    text: 'User not found in Your input data. Please Login.'
+                });
+            }
             // Check if user credentials are wrong (401)
             else if (error.response && error.response.status === 401) {
                 Swal.fire({
@@ -86,6 +93,9 @@ const Login = () => {
                                 </button>
                                 <button onClick={() => handleClick('master')} className={`p-4 text-sm border rounded-md ${active === 'master' ? 'bg-primary text-white' : ''}`}>
                                     Counter Master
+                                </button>
+                                <button onClick={() => handleClick('admin')} className={`p-4 text-sm border rounded-md ${active === 'admin' ? 'bg-primary text-white' : ''}`}>
+                                    Admin
                                 </button>
                             </div>
                             <div className="login-form mt-4 md:mt-8">

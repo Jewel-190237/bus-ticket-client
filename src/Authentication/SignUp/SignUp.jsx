@@ -41,9 +41,9 @@ const SignUp = () => {
         try {
             const response = await axiosSecurePublic.post('/users', newUser);
 
-            // Check for success status
+            console.log(response)
             if (response.status === 200) {
-                // Success message
+                
                 Swal.fire({
                     icon: 'success',
                     title: 'Registration successful',
@@ -213,7 +213,7 @@ const SignUp = () => {
                                     </Form.Item>
                                     <button type="submit" className="button w-full !mt-10 !rounded-md">Sign In</button>
                                 </Form>
-                                <p className="mt-4 text-center">Have an account? <Link to="/login" className="underline text-primary font-bold">Sign Up</Link></p>
+                                <p className="mt-4 text-center">Have an account? <Link to="/login" className="underline text-primary font-bold">Log In</Link></p>
                             </div>
                         </div>
                     </div>

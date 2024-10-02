@@ -2,6 +2,7 @@ import ServiceCard from '../../Card/ServiceCard';
 import BasicHeader from '../../Shared-file/SectionHeader';
 import card1 from '../../../assets/service/card1.png';
 import card2 from '../../../assets/service/card2.png';
+import AuthButton from '../../../Authentication/AuthButton/AuthButton';
 const serviceData = [
     {
         _id: 1,
@@ -42,6 +43,10 @@ const LatestService = () => {
                         }
                     </div>
                 }
+            </div>
+
+            <div className='mt-40 px-6'>
+                <AuthButton/>
             </div>
         </section>
     );

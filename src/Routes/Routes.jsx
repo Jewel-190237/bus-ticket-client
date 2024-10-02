@@ -7,6 +7,8 @@ import Home from "../Pages/Home/Home/Home";
 import Login from "../Authentication/Login/Login";
 import SignUp from "../Authentication/SignUp/SignUp";
 import Service from "../Pages/Service/Service";
+import ProtectedLogin from "../Authentication/ProtectLogin/ProtectedLogin";
+import ProtectedAdmin from "../Authentication/ProtectedAdmin/ProtectedAdmin";
 // import Register from "../Authentication/Register";
 // import Dashboard from "../Layout/Dashboard";
 // import PrivateRoute from "../Providers/PrivateRoute"
@@ -37,16 +39,20 @@ export const router = createBrowserRouter([
       },
       {
         path: '/login',
-        element: <Login/>
+        element: <ProtectedLogin> <Login/> </ProtectedLogin>
+      },
+      {
+        path: '/dashboard',
+        element: <ProtectedAdmin> <Service/> </ProtectedAdmin>
       },
       {
         path: '/signup',
         element: <SignUp/>
       },
-      {
-        path: '/service',
-        element: <Service/>
-      },
+      // {
+      //   path: '/service',
+      //   element: <Service/>
+      // },
       // {
       //   path: '/campDetails/:id',
       //   element: <PrivateRoute> <CampDetails></CampDetails></PrivateRoute>,
