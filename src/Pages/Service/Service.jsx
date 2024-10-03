@@ -1,19 +1,17 @@
-/* eslint-disable no-unused-vars */
-import BusCard from "../Card/BusCard";
-import BasicHeader from "../Shared-file/BasicHeader";
+/* eslint-disable react/prop-types */
 import { TbArmchair } from "react-icons/tb";
 import { GiBusDoors } from "react-icons/gi";
 import { LuChevronUpCircle } from "react-icons/lu";
 import { useState } from "react";
 import { Form, Input } from "antd";
 
-const Service = () => {
+const Service = ({seatPrice}) => {
     const [activeSeats, setActiveSeats] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const [discount, setDiscount] = useState(0);
     const [form] = Form.useForm();
-    const seatPrice = 900;
-    const leftSites = [
+
+    const leftSeats = [
         'A1', 'A2',
         'B1', 'B2',
         'C1', 'C2',
@@ -61,18 +59,18 @@ const Service = () => {
     };
 
     const totalPrice = activeSeats.length * seatPrice;
-
     const grandTotal = totalPrice - discount;
 
     const onFinish = (values) => {
         console.log(values, grandTotal, activeSeats);
         form.resetFields();
     };
+
     return (
         <div>
-            <BasicHeader heading='Service' />
+            
             <div className="mt-16 md:mt-32 bus-container">
-                <BusCard heading='Bus No: A30562' description='The latest Koyra to Dhaka bus offers comfortable seating, air conditioning, and Wi-Fi, ensuring a smooth ride with daily departures for all travelers!' availableSea='45' route='Koyra - Dhaka' departureTime='9:00 AM' estimateTime='11 Hours' startingPoint='Koyra' ticketPrice='900' />
+
             </div>
             <div className="bus-container mt-10 md:mt-20 flex flex-col gap-10 md:flex-row">
                 <div className="w-full md:w-[60%]">
@@ -93,7 +91,7 @@ const Service = () => {
                     </div>
                     <div className="flex items-center justify-between mt-6 md:mt-10">
                         <div className="grid grid-cols-2 gap-3 md:gap-6">
-                            {leftSites.map((seat, index) => (
+                            {leftSeats.map((seat, index) => (
                                 <button key={index} onClick={() => handleClick(seat)} className={`seat seat-text ${activeSeats.includes(seat) ? '!bg-primary !text-white' : ''}`}>
                                     {seat}
                                 </button>
@@ -122,12 +120,10 @@ const Service = () => {
                                     <p className="description !text-right">{seatPrice}</p>
                                 </div>
                             ))}
-
                             <div className="py-6 flex items-center justify-between">
                                 <p className="description !text-[#030712]">Total</p>
                                 <p className="description !text-[#030712] !text-right">{totalPrice} BDT</p>
                             </div>
-
                             <div className="flex items-center">
                                 <input
                                     className="w-full bg-white text-black p-4 border rounded-l-xl"
@@ -138,13 +134,12 @@ const Service = () => {
                                 />
                                 <button
                                     className={`p-4 bg-primary text-white rounded-r-xl ${!inputValue ? 'opacity-40 cursor-not-allowed' : ''}`}
-                                    onClick={applyDiscount} // Call the function on button click
+                                    onClick={applyDiscount}
                                     disabled={!inputValue}
                                 >
                                     Apply
                                 </button>
                             </div>
-
                             {/* Grand Total */}
                             <div className="py-6 flex items-center justify-between">
                                 <p className="description !text-[#030712]">Grand Total</p>
@@ -156,36 +151,21 @@ const Service = () => {
                                 <Form.Item
                                     label="Name: "
                                     name="name"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Please input your Name!',
-                                        },
-                                    ]}
+                                    rules={[{ required: true, message: 'Please input your Name!' }]}
                                 >
                                     <Input placeholder='Input your Name' type="text" className="p-4" />
                                 </Form.Item>
                                 <Form.Item
                                     label="Phone Number: "
                                     name="phone"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Please input your Phone Number!',
-                                        },
-                                    ]}
+                                    rules={[{ required: true, message: 'Please input your Phone Number!' }]}
                                 >
                                     <Input placeholder='Input your Phone Number' type="number" className="p-4" />
                                 </Form.Item>
                                 <Form.Item
                                     label="Counter Location: "
                                     name="location"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Please input your Counter Location!',
-                                        },
-                                    ]}
+                                    rules={[{ required: true, message: 'Please input your Counter Location!' }]}
                                 >
                                     <Input placeholder='Input your Counter Location' type="text" className="p-4" />
                                 </Form.Item>

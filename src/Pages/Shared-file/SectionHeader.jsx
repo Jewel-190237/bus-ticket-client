@@ -3,7 +3,7 @@ const SectionHeader = ({heading, description}) => {
     return (
         <div className='mx-auto px-3 md:px-4'>
             <h1 className='heading'>{heading}</h1>
-            <p className='description text-center mt-4 w-full md:w-1/2 mx-auto'>{description}</p>
+            <p className='description text-center mt-4 w-full md:w-2/3 mx-auto'>{description}</p>
         </div>
     );
 };

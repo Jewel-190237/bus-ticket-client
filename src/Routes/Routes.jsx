@@ -6,27 +6,17 @@ import Main from "../Layout/Main";
 import Home from "../Pages/Home/Home/Home";
 import Login from "../Authentication/Login/Login";
 import SignUp from "../Authentication/SignUp/SignUp";
-import Service from "../Pages/Service/Service";
 import ProtectedLogin from "../Authentication/ProtectLogin/ProtectedLogin";
+import AllService from "../Pages/Service/AllService";
+import About from "../Pages/About/About";
+import AllFaq from "../Pages/FAQ/AllFaq";
+import ContactPage from "../Pages/Contact/ContactPage";
 import ProtectedAdmin from "../Authentication/ProtectedAdmin/ProtectedAdmin";
-// import Register from "../Authentication/Register";
-// import Dashboard from "../Layout/Dashboard";
-// import PrivateRoute from "../Providers/PrivateRoute"
-// import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
-// import AddCamp from "../Pages/Dashboard/AddCamp/AddCamp";
-// import CampDetails from "../Pages/Home/Camp/CampDetails";
-// import JoinCamp from "../Pages/Home/Camp/JoinCamp";
-// import ManageCamp from "../Pages/Dashboard/ManageCamp/ManageCamp";
-// import ManageRegisteredCamp from "../Pages/Dashboard/ManageRegisteredCamp/ManageRegisteredCamp";
-// import UpdateCamp from "../Pages/Dashboard/UpdateCamp/UpdateCamp";
-// import Profile from "../Pages/Dashboard/Profile/Profile";
-// import UpdateProfile from "../Pages/Dashboard/UpdateProfile/UpdateProfile";
-// import RegisteredCamp from "../Pages/Dashboard/RegisteredCamp/RegisteredCamp";
-// import Payment from "../Pages/Dashboard/Payment/Payment";
-// // import AvailableCamp from "../Pages/AvailableCamp/AvailableCamp";
-// import PaymentHistory from "../Pages/Dashboard/PaymentHistory/PaymentHistory";
-// import AdminHome from "../Pages/Dashboard/AdminHome/AdminHome";
-
+import Dashboard from "../Layout/Dashboard";
+import AdminHome from "../Pages/Dashboard/AdminHome/AdminHome";
+import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
+import AllMaster from "../Pages/Dashboard/AllMaster/AllMaster";
+// import ProtectedAdmin from "../Authentication/ProtectedAdmin/ProtectedAdmin";
 
 export const router = createBrowserRouter([
   {
@@ -39,95 +29,47 @@ export const router = createBrowserRouter([
       },
       {
         path: '/login',
-        element: <ProtectedLogin> <Login/> </ProtectedLogin>
+        element: <ProtectedLogin> <Login /> </ProtectedLogin>
       },
-      {
-        path: '/dashboard',
-        element: <ProtectedAdmin> <Service/> </ProtectedAdmin>
-      },
+
       {
         path: '/signup',
-        element: <SignUp/>
+        element: <SignUp />
       },
-      // {
-      //   path: '/service',
-      //   element: <Service/>
-      // },
-      // {
-      //   path: '/campDetails/:id',
-      //   element: <PrivateRoute> <CampDetails></CampDetails></PrivateRoute>,
-      //   loader: ({params}) => fetch(`https://server-site-lilac.vercel.app/singleCamp/${params.id}`)
-      // },
-      // {
-      //   path: '/joinCamp/:id',
-      //   element: <JoinCamp></JoinCamp>,
-      //   loader: ({params}) => fetch(`https://server-site-lilac.vercel.app/joinCamp/${params.id}`)
-      // }
+      {
+        path: '/service',
+        element: <AllService />
+      },
+      {
+        path: '/about',
+        element: <About />
+      },
+      {
+        path: '/faq',
+        element: <AllFaq />
+      },
+      {
+        path: '/contact',
+        element: <ContactPage />
+      }
     ]
   },
-  // {
-  //   path: 'dashboard',
-  //   element:  <PrivateRoute> <Dashboard></Dashboard> </PrivateRoute>,
-  //   // element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
-  //   children: [
-  //     // general user can access
-      
-  //     {
-  //       path: 'profile',
-  //       element: <PrivateRoute> <Profile></Profile> </PrivateRoute>
-  //     },
-  //     {
-  //       path: 'registeredCamp',
-  //       element: <PrivateRoute> <RegisteredCamp></RegisteredCamp> </PrivateRoute>
-  //     },
-      
-  //     {
-  //       path: 'paymentHistory',
-  //       element: <PrivateRoute> <PaymentHistory></PaymentHistory> </PrivateRoute>
-  //     },
-  //     {
-  //       path: 'payment/:id',
-  //       element: <PrivateRoute> <Payment></Payment> </PrivateRoute>,
-  //       loader: ({params}) => fetch(`https://server-site-lilac.vercel.app/camp/${params.id}`)
-  //     },
-
-  //     // Only Admin can access
-  //     {
-  //       path: 'adminHome',
-  //       element: <AdminHome></AdminHome>
-  //     },
-  //     {
-  //       path: 'allUsers',
-  //       element: <AllUsers></AllUsers>
-  //     },
-  //     {
-  //       path: 'addCamp',
-  //       element: <AddCamp></AddCamp>
-  //     },
-  //     {
-  //       path: 'manageCamp',
-  //       element: <ManageCamp></ManageCamp>
-  //     },
-  //     {
-  //       path: 'manageRegisteredCamp',
-  //       element: <ManageRegisteredCamp></ManageRegisteredCamp>
-  //     },
-  //     {
-  //       path: 'profile',
-  //       element: <Profile></Profile>
-  //     },
-  //     {
-  //       // updateCamp
-  //       path: 'updateCamp/:id',
-  //       element: <UpdateCamp></UpdateCamp>,
-  //       loader: ({params}) => fetch(`https://server-site-lilac.vercel.app/updateCamp/${params.id}`)
-  //     },
-  //     {
-  //       // updateCamp
-  //       path: 'updateProfile/:email',
-  //       element: <UpdateProfile></UpdateProfile>,
-  //       loader: ({params}) => fetch(`https://server-site-lilac.vercel.app/updateProfile/${params.email}`)
-  //     }
-  //   ]
-  // }
-]);
+  {
+    path: 'dashboard',
+    element: <ProtectedAdmin> <Dashboard /> </ProtectedAdmin>,
+    //  Only admin can access
+    children: [
+      {
+        path: 'adminHome',
+        element: <AdminHome />
+      },
+      {
+        path: 'allUsers',
+        element: <AllUsers />
+      },
+      {
+        path: 'allMaster',
+        element: <AllMaster/>
+      },
+    ]
+  }])
