@@ -16,6 +16,8 @@ import Dashboard from "../Layout/Dashboard";
 import AdminHome from "../Pages/Dashboard/AdminHome/AdminHome";
 import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
 import AllMaster from "../Pages/Dashboard/AllMaster/AllMaster";
+import ForgetPassword from "../Authentication/forgatpassword/ForgetPawwsord";
+import Otp from "../Authentication/OTP/Otp";
 // import ProtectedAdmin from "../Authentication/ProtectedAdmin/ProtectedAdmin";
 
 export const router = createBrowserRouter([
@@ -51,6 +53,14 @@ export const router = createBrowserRouter([
       {
         path: '/contact',
         element: <ContactPage />
+      },
+      {
+        path: '/forgetPassword',
+        element: <ForgetPassword/>
+      },
+      {
+        path: '/otp',
+        element: <Otp/>
       }
     ]
   },

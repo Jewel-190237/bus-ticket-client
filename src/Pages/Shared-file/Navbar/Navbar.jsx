@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdCloseCircle } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
+import AuthButton from '../../../Authentication/AuthButton/AuthButton';
 
 const links = [
   { name: 'Home', path: '/' },
@@ -34,7 +35,7 @@ const Navbar = () => {
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  const renderLinks = ( ) =>
+  const renderLinks = () =>
     links.map((link, index) => (
       <div key={index}>
         <a
@@ -82,13 +83,19 @@ const Navbar = () => {
           {renderLinks()}
         </div>
 
-        <div className="hidden lg:flex relative justify-center lg:justify-end">
-          <button
-            className="border-2 border-[#E67529] animate-pulse-scale  px-4 md:px-8 py-4 rounded-[4px] hover:bg-[#E67529] hover:text-white text-primary"
-          >
-            Buy Tickets
-          </button>
+        <div className='flex space-x-4'>
+          <div>
+            <AuthButton />
+          </div>
+          <div className="hidden lg:flex relative justify-center lg:justify-end">
+            <button
+              className="border-2 border-[#E67529] animate-pulse-scale  px-4 md:px-8 py-4 rounded-[4px] hover:bg-[#E67529] hover:text-white text-primary"
+            >
+              Buy Tickets
+            </button>
+          </div>
         </div>
+
       </div>
 
       <div className="h-[1px] mt-2 w-full relative bg-gray-500"></div>

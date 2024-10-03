@@ -91,14 +91,6 @@
     .ant-input-affix-wrapper:hover {
         border-color: black !important;
     }
-
-    .ant-otp {
-        @apply flex items-center justify-between space-x-2 md:space-x-4 lg:space-x-8
-    }
-
-    .ant-otp .ant-otp-input {
-        @apply text-center p-2 md:p-4 lg:p-5
-    }
 }
 
 .ticket-header {
@@ -284,6 +276,7 @@
             margin-top: 10px;
         }
     }
+
     @media (max-width: 480px) {
 
         .swiper-button-prev,
@@ -297,11 +290,13 @@
         .swiper-button-next:after {
             font-size: 16px;
         }
+
         .swiper-button-prev,
         .swiper-rtl .swiper-button-prev {
             right: 55px;
             left: auto;
         }
+
         .swiper-pagination {
             margin-top: 5px;
         }
@@ -312,13 +307,32 @@
 
 /* dropdown */
 .custom-select {
-    appearance: none; /* Remove default styling */
-    background: url('src/assets/arrow.svg') no-repeat right  5px center; /* Add your custom arrow */
-    background-size: 20px; /* Adjust size of the arrow */
-    padding-right: 30px; 
+    appearance: none;
+    /* Remove default styling */
+    background: url('src/assets/arrow.svg') no-repeat right 5px center;
+    /* Add your custom arrow */
+    background-size: 20px;
+    /* Adjust size of the arrow */
+    padding-right: 30px;
     font-size: medium;
-  }
-  
-  .custom-select:hover {
-    cursor: pointer; /* Change cursor on hover */
-  }
+}
+
+.custom-select:hover {
+    cursor: pointer;
+    /* Change cursor on hover */
+}
+
+.auth-heading{
+    @apply text-3xl font-bold text-black text-center
+}
+
+.ant-otp {
+    @apply flex items-center mx-auto justify-center space-x-2
+}
+
+.ant-otp .ant-otp-input {
+    @apply text-center mx-auto !w-12 !h-7 p-2 md:p-4 lg:p-5 hover:!border-primary
+}
+.ant-otp-input{
+    @apply hover:!border-primary 
+}

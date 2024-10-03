@@ -6,19 +6,15 @@ import logo from '../../assets/logo.png'
 import Swal from 'sweetalert2';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 
-
 const SignUp = () => {
     const navigate = useNavigate();
     const axiosSecurePublic = useAxiosPublic();
 
-
-    // Individual states for each field
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [location, setLocation] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [otp, setOtp] = useState(''); // State to store OTP input
 
     const [role, setRole] = useState('member');
     const [active, setActive] = useState('member');
@@ -46,16 +42,14 @@ const SignUp = () => {
                 
                 Swal.fire({
                     icon: 'success',
-                    title: 'Registration successful',
-                    showConfirmButton: false,
-                    timer: 2000
+                    title: 'Sign Up successful',
+                    showConfirmButton: true,
+                    text:'Please Login Now'
                 });
-                // Navigate to home page or desired route
-                navigate('/');
+                navigate('/login');
             }
 
         } catch (error) {
-            // Check if the user already exists (status 409)
             if (error.response && error.response.status === 409) {
                 Swal.fire({
                     icon: 'warning',
@@ -64,7 +58,6 @@ const SignUp = () => {
                     showConfirmButton: true
                 });
             } else {
-                // General error message
                 Swal.fire({
                     icon: 'error',
                     title: 'Registration failed',
@@ -74,32 +67,8 @@ const SignUp = () => {
 
             console.error('Error:', error);
         }
-
-        // Reset the form
         form.resetFields();
     };
-
-
-
-    // Log phone number when 'Send OTP' button is clicked
-    const handleSendOtp = () => {
-        console.log('Phone:', phone);
-    };
-
-    // Log OTP when 'Verify OTP' button is clicked
-    const handleVerifyOtp = () => {
-        console.log('OTP:', otp); // Log the OTP value stored in the state
-    };
-
-    const onChange = (otpValue) => {
-        setOtp(otpValue); // Update OTP state
-        console.log('onChange:', otpValue); // Log OTP as it changes
-    };
-
-    const sharedProps = {
-        onChange, // Handle OTP change here
-    };
-
 
     return (
         <div>

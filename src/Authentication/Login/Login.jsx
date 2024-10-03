@@ -21,27 +21,27 @@ const Login = () => {
         console.log({ ...values, role });
         try {
             // Send phone, password, and role to the server
-            const response = await axios.post('http://localhost:5000/login', { 
-                phone: values.phone, 
-                password: values.password, 
+            const response = await axios.post('http://localhost:5000/login', {
+                phone: values.phone,
+                password: values.password,
                 role: role // Send the selected role
             });
-            
+
             console.log('Server Response:', response.data);
-    
+
             Swal.fire({
                 icon: 'success',
                 title: 'Login successful',
                 showConfirmButton: false,
                 timer: 2000
             });
-    
+
             localStorage.setItem('token', response.data.token);
-    
+
             navigate('/');
         } catch (error) {
             console.error('Login error:', error);
-    
+
             // Check if the error is due to role mismatch (403)
             if (error.response && error.response.status === 403) {
                 Swal.fire({
@@ -73,7 +73,7 @@ const Login = () => {
                 });
             }
         }
-    
+
         form.resetFields();
     };
 
@@ -114,6 +114,9 @@ const Login = () => {
                                     >
                                         <Input.Password placeholder='Input your Password' className='p-4' />
                                     </Form.Item>
+                                    <div className='mt-4'>
+                                        <Link to='/forgetPassword' className='underline text-sm md:text-xl text-primary font-bold'>Forget Password</Link>
+                                    </div>
                                     <button type="submit" className="button w-full !mt-10 !rounded-md"> Log In </button>
                                 </Form>
                                 <p className="mt-4 text-center">Do not have an account? <Link to="/signup" className="underline text-primary font-bold">Sign Up</Link></p>
