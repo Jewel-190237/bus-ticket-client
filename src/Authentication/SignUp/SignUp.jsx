@@ -101,7 +101,6 @@ const SignUp = () => {
                                             className="p-4"
                                             onChange={(e) => {
                                                 setName(e.target.value);
-                                                console.log('Name:', e.target.value);
                                             }}
                                         />
                                     </Form.Item>
@@ -116,7 +115,6 @@ const SignUp = () => {
                                             className="p-4"
                                             onChange={(e) => {
                                                 setPhone(e.target.value);
-                                                console.log('Phone:', e.target.value);
                                             }}
                                         />
                                     </Form.Item>
@@ -131,7 +129,6 @@ const SignUp = () => {
                                             className="p-4"
                                             onChange={(e) => {
                                                 setLocation(e.target.value);
-                                                console.log('Location:', e.target.value);
                                             }}
                                         />
                                     </Form.Item>
@@ -146,7 +143,6 @@ const SignUp = () => {
                                             className="p-4"
                                             onChange={(e) => {
                                                 setPassword(e.target.value);
-                                                console.log('Password:', e.target.value);
                                             }}
                                         />
                                     </Form.Item>
@@ -176,7 +172,6 @@ const SignUp = () => {
                                             className="p-4"
                                             onChange={(e) => {
                                                 setConfirmPassword(e.target.value);
-                                                console.log('Confirm Password:', e.target.value);
                                             }}
                                         />
                                     </Form.Item>
