@@ -8,7 +8,11 @@ const AllMaster = () => {
 
     // Fetch users from the server when the component mounts
     useEffect(() => {
-        fetch('http://localhost:5000/users')
+        fetch('http://localhost:5000/users', {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}` // Send token for authorization
+            }
+        })
             .then(response => response.json())
             .then(data => setUsers(data))
             .catch(error => console.error("Error fetching users:", error));
@@ -30,6 +34,7 @@ const AllMaster = () => {
                     method: "DELETE",
                     headers: {
                         'Content-Type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem('token')}` // Ensure token is sent for delete
                     },
                 })
                     .then(response => response.json())
@@ -55,17 +60,17 @@ const AllMaster = () => {
         });
     };
 
-    // Filter users to show only members
-    const memberUsers = users.filter(user => user.role === "master");
+    // Filter users to show only "master" role users
+    const masterUsers = users.filter(user => user.role === "master");
 
     return (
         <>
             <div className="flex justify-center py-8">
-                <h2 className="text-4xl font-bold">Manage Members</h2>
+                <h2 className="text-4xl font-bold">Manage Masters</h2>
             </div>
 
             <div className="w-full px-4 lg:px-10">
-                <h2 className="text-2xl lg:text-4xl mb-4 font-semibold">Total Members: {memberUsers.length}</h2>
+                <h2 className="text-2xl lg:text-4xl mb-4 font-semibold">Total Masters: {masterUsers.length}</h2>
                 <div className="overflow-x-auto">
                     <table className="table-auto w-full divide-y divide-gray-300 text-left text-sm lg:text-base">
                         <thead className="bg-slate-700 text-white">
@@ -80,14 +85,16 @@ const AllMaster = () => {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200">
-                            {memberUsers.map((user, index) => (
+                            {masterUsers.map((user, index) => (
                                 <tr key={user._id}>
                                     <td className="px-4 py-2">{index + 1}</td>
                                     <td className="px-4 py-2">{user.name}</td>
                                     <td className="px-4 py-2">{user.phone}</td>
                                     <td className="px-4 py-2">{user.location}</td>
                                     <td className="px-4 py-2">{user.role}</td>
-                                    <td className="pl-8 py-2"><MdOutlineSystemUpdateAlt className="text-xl text-primary " /></td>
+                                    <td className="pl-8 py-2">
+                                        <MdOutlineSystemUpdateAlt className="text-xl text-primary " />
+                                    </td>
                                     <td className="pl-8 py-2">
                                         <button
                                             onClick={() => handleDelete(user)}

@@ -7,10 +7,21 @@ const AllUsers = () => {
 
     // Fetch users from the server when the component mounts
     useEffect(() => {
-        fetch('http://localhost:5000/users')
-            .then(response => response.json())
-            .then(data => setUsers(data))
-            .catch(error => console.error("Error fetching users:", error));
+        const token = localStorage.getItem('token'); // Get JWT token from localStorage
+        if (token) {
+            fetch('http://localhost:5000/users', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}` // Add Authorization header
+                }
+            })
+                .then(response => response.json())
+                .then(data => setUsers(data))
+                .catch(error => console.error("Error fetching users:", error));
+        } else {
+            console.error("No token found in localStorage.");
+        }
     }, []);
 
     // Handle deleting a user
@@ -25,31 +36,37 @@ const AllUsers = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/users/${user._id}`, {
-                    method: "DELETE",
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                  })
-                    .then(response => response.json())
-                    .then(result => {
-                      console.log('Delete result:', result);  // Log result for debugging
-                      if (result.deletedCount > 0) {
-                        Swal.fire({
-                          title: "Deleted!",
-                          text: `${user.name} has been deleted.`,
-                          icon: "success"
-                        });
-                        setUsers(prevUsers => prevUsers.filter(u => u._id !== user._id));
-                      } else {
-                        Swal.fire({
-                          title: "Error!",
-                          text: "Failed to delete user",
-                          icon: "error"
-                        });
-                      }
+                const token = localStorage.getItem('token'); // Get JWT token from localStorage
+                if (token) {
+                    fetch(`http://localhost:5000/users/${user._id}`, {
+                        method: "DELETE",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}` // Add Authorization header
+                        },
                     })
-                    .catch(error => console.error("Error deleting user:", error));                  
+                        .then(response => response.json())
+                        .then(result => {
+                            console.log('Delete result:', result);  // Log result for debugging
+                            if (result.deletedCount > 0) {
+                                Swal.fire({
+                                    title: "Deleted!",
+                                    text: `${user.name} has been deleted.`,
+                                    icon: "success"
+                                });
+                                setUsers(prevUsers => prevUsers.filter(u => u._id !== user._id));
+                            } else {
+                                Swal.fire({
+                                    title: "Error!",
+                                    text: "Failed to delete user",
+                                    icon: "error"
+                                });
+                            }
+                        })
+                        .catch(error => console.error("Error deleting user:", error));
+                } else {
+                    console.error("No token found in localStorage.");
+                }
             }
         });
     };
