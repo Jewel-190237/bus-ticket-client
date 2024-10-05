@@ -4,9 +4,16 @@ import { GiBusDoors } from "react-icons/gi";
 import { LuChevronUpCircle } from "react-icons/lu";
 import { useState } from "react";
 import { Form, Input } from "antd";
+import Swal from 'sweetalert2';
 
-const Service = ({seatPrice}) => {
+
+const Service = ({ seatPrice }) => {
     const [activeSeats, setActiveSeats] = useState([]);
+    const [name, setName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [location, setLocation] = useState('');
+    const [address, setAddress] = useState('');
+    const [email, setEmail] = useState('');
     const [inputValue, setInputValue] = useState('');
     const [discount, setDiscount] = useState(0);
     const [form] = Form.useForm();
@@ -53,7 +60,7 @@ const Service = ({seatPrice}) => {
         if (!isNaN(discountValue) && discountValue > 0) {
             setDiscount(discountValue);
         } else {
-            setDiscount(0); 
+            setDiscount(0);
         }
         setInputValue('');
     };
@@ -61,14 +68,57 @@ const Service = ({seatPrice}) => {
     const totalPrice = activeSeats.length * seatPrice;
     const grandTotal = totalPrice - discount;
 
-    const onFinish = (values) => {
-        console.log(values, grandTotal, activeSeats);
-        form.resetFields();
+
+    const payment = {
+        price: grandTotal,
+        allocatedSeat: activeSeats,
+        name: name,
+        phone: phone,
+        location: location,
+        address: address,
+        email: email,
     };
+
+    const onFinish = async () => {
+        try {
+            console.log(payment);
+
+            const response = await fetch("http://localhost:5000/payment", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payment),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                window.location.replace(result.url);
+            } else {
+                Swal.fire({
+                    title: "Payment Failed",
+                    text: result.error || "There was an issue with your payment. Please try again.",
+                    icon: "error",
+                    confirmButtonText: "Try Again",
+                });
+            }
+        } catch (error) {
+            console.error("Error sending payment data:", error);
+
+            Swal.fire({
+                title: "Network Error",
+                text: "Failed to connect to the server. Please check your internet connection and try again.",
+                icon: "error",
+                confirmButtonText: "OK",
+            });
+        }
+    };
+
 
     return (
         <div>
-            
+
             <div className="mt-16 md:mt-32 bus-container">
 
             </div>
@@ -153,21 +203,35 @@ const Service = ({seatPrice}) => {
                                     name="name"
                                     rules={[{ required: true, message: 'Please input your Name!' }]}
                                 >
-                                    <Input placeholder='Input your Name' type="text" className="p-4" />
+                                    <Input onChange={(e) => setName(e.target.value)} placeholder='Input your Name' type="text" className="p-4" />
+                                </Form.Item>
+                                <Form.Item
+                                    label="Email: "
+                                    name="email"
+                                    rules={[{ required: true, message: 'Please input your Email!' }]}
+                                >
+                                    <Input onChange={(e) => setEmail(e.target.value)} placeholder='Input your Email' type="email" className="p-4" />
                                 </Form.Item>
                                 <Form.Item
                                     label="Phone Number: "
                                     name="phone"
                                     rules={[{ required: true, message: 'Please input your Phone Number!' }]}
                                 >
-                                    <Input placeholder='Input your Phone Number' type="number" className="p-4" />
+                                    <Input onChange={(e) => setPhone(e.target.value)} placeholder='Input your Phone Number' type="number" className="p-4" />
                                 </Form.Item>
                                 <Form.Item
                                     label="Counter Location: "
                                     name="location"
                                     rules={[{ required: true, message: 'Please input your Counter Location!' }]}
                                 >
-                                    <Input placeholder='Input your Counter Location' type="text" className="p-4" />
+                                    <Input onChange={(e) => setLocation(e.target.value)} placeholder='Input your Counter Location' type="text" className="p-4" />
+                                </Form.Item>
+                                <Form.Item
+                                    label="Address: "
+                                    name="address"
+                                    rules={[{ required: true, message: 'Please input your Address!' }]}
+                                >
+                                    <Input onChange={(e) => setAddress(e.target.value)} placeholder='Input your Address' type="text" className="p-4" />
                                 </Form.Item>
                                 <button type="submit" className="button w-full !mt-10 !rounded-md">Continue</button>
                             </Form>
