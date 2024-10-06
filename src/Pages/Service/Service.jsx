@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { TbArmchair } from "react-icons/tb";
 import { GiBusDoors } from "react-icons/gi";
 import { LuChevronUpCircle } from "react-icons/lu";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from 'axios';
 import { Form, Input } from "antd";
 import Swal from 'sweetalert2';
 
@@ -17,6 +19,9 @@ const Service = ({ seatPrice }) => {
     const [inputValue, setInputValue] = useState('');
     const [discount, setDiscount] = useState(0);
     const [form] = Form.useForm();
+    const [allocatedSeats, setAllocatedSeats] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     const leftSeats = [
         'A1', 'A2',
@@ -115,14 +120,43 @@ const Service = ({ seatPrice }) => {
         }
     };
 
+    useEffect(() => {
+        const fetchPaidSeats = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await axios.get('http://localhost:5000/allocated-seats', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}` // Add Authorization header
+                    },
+                });
+                // Assuming response.data is an array of seat objects
+                const seats = response.data.map(item => item.allocatedSeat).flat(); // Extract and flatten seat arrays
+                setAllocatedSeats(seats);
+                setLoading(false);
+            } catch (error) {
+                setError('Failed to load allocated seats.');
+                setLoading(false);
+            }
+        };
+
+        fetchPaidSeats();
+    }, []);
+
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>{error}</p>;
+
     return (
         <div>
-
             <div className="mt-16 md:mt-32 bus-container">
-
             </div>
             <div className="bus-container mt-10 md:mt-20 flex flex-col gap-10 md:flex-row">
                 <div className="w-full md:w-[60%]">
+                    <div className="my-10">
+                        <p className="text-center text-5xl">{allocatedSeats.length}</p>
+                        <p className="text-center text-5xl">{allocatedSeats.join(', ')}</p>
+                    </div>
                     <h3 className="ticket-header">Select your seat</h3>
                     <div className="flex items-center justify-between font-medium text-[16px] md:text-2xl py-5 border-dashed border-b border-black">
                         <div className="select-seat space-x-2 md:space-x-4">
@@ -141,14 +175,24 @@ const Service = ({ seatPrice }) => {
                     <div className="flex items-center justify-between mt-6 md:mt-10">
                         <div className="grid grid-cols-2 gap-3 md:gap-6">
                             {leftSeats.map((seat, index) => (
-                                <button key={index} onClick={() => handleClick(seat)} className={`seat seat-text ${activeSeats.includes(seat) ? '!bg-primary !text-white' : ''}`}>
+                                <button
+                                    key={index}
+                                    onClick={() => handleClick(seat)}
+                                    disabled={allocatedSeats.includes(seat)} // Disable the button if seat is allocated
+                                    className={`seat seat-text ${activeSeats.includes(seat) ? '!bg-primary !text-white' : ''} ${allocatedSeats.includes(seat) ? '!bg-gray-300 !cursor-not-allowed' : ''}`}
+                                >
                                     {seat}
                                 </button>
                             ))}
                         </div>
                         <div className="grid grid-cols-2 gap-3 md:gap-6">
                             {rightSeats.map((seat, index) => (
-                                <button key={index} onClick={() => handleClick(seat)} className={`seat seat-text ${activeSeats.includes(seat) ? '!bg-primary !text-white' : ''}`}>
+                                <button
+                                    key={index}
+                                    onClick={() => handleClick(seat)}
+                                    disabled={allocatedSeats.includes(seat)} // Disable the button if seat is allocated
+                                    className={`seat seat-text ${activeSeats.includes(seat) ? '!bg-primary !text-white' : ''} ${allocatedSeats.includes(seat) ? '!bg-gray-300 !cursor-not-allowed' : ''}`}
+                                >
                                     {seat}
                                 </button>
                             ))}

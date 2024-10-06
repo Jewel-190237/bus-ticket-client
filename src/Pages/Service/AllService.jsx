@@ -1,20 +1,21 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from 'axios';
 import { LuBus } from "react-icons/lu";
 import { TbArmchair, TbCoinTakaFilled } from "react-icons/tb";
 import SectionHeader from "../Shared-file/SectionHeader";
 import Service from "../Service/Service";
 import BasicHeader from "../Shared-file/BasicHeader";
 
-const AllService = ({ 
-  heading = 'Bus No: A30562', 
-  description = 'The latest Koyra to Dhaka bus offers comfortable seating, air conditioning, and Wi-Fi, ensuring a smooth ride with daily departures for all travelers!', 
-  availableSeat = '45', 
-  routes = ['Koyra - Dhaka', 'Dhaka - Khulna', 'Jessore - Dhaka', 'Kushtia - Dhaka', 'Barisal - Dhaka'], 
-  departureTime = '9:00 AM', 
-  estimateTime = '11 Hours', 
-  startingPoint = 'Koyra' 
+const AllService = ({
+  heading = 'Bus No: A30562',
+  description = 'The latest Koyra to Dhaka bus offers comfortable seating, air conditioning, and Wi-Fi, ensuring a smooth ride with daily departures for all travelers!',
+  totalSeat = '45',
+  routes = ['Koyra - Dhaka', 'Dhaka - Khulna', 'Jessore - Dhaka', 'Kushtia - Dhaka', 'Barisal - Dhaka'],
+  departureTime = '9:00 AM',
+  estimateTime = '11 Hours',
+  startingPoint = 'Koyra'
 }) => {
   const priceList = {
     'Koyra - Dhaka': 900,
@@ -26,17 +27,54 @@ const AllService = ({
 
   const [selectedRoute, setSelectedRoute] = useState(routes[0]);
   const [ticketPrice, setTicketPrice] = useState(priceList[selectedRoute]);
+  const [allocatedSeats, setAllocatedSeats] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const handleRouteChange = (e) => {
     const newRoute = e.target.value;
     setSelectedRoute(newRoute);
-    setTicketPrice(priceList[newRoute]); 
+    setTicketPrice(priceList[newRoute]);
   };
+
+  useEffect(() => {
+    const fetchPaidSeats = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://localhost:5000/allocated-seats', {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // Add Authorization header
+          },
+        });
+        // Assuming response.data is an array of seat objects
+        const seats = response.data.map(item => item.allocatedSeat).flat(); // Extract and flatten seat arrays
+        setAllocatedSeats(seats);
+        setLoading(false);
+      } catch (error) {
+        setError('Failed to load allocated seats.');
+        setLoading(false);
+      }
+    };
+
+    fetchPaidSeats();
+  }, []);
+
+
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
+
+  const availableSeat = totalSeat - allocatedSeats.length;
 
   return (
     <section >
-      <BasicHeader heading='Service'  />
-      <div  className='pt-10'><SectionHeader heading={heading} description={description} /></div>
+      <BasicHeader heading='Service' />
+      <div className="my-10">
+        <p className="text-center text-5xl">{allocatedSeats.length}</p>
+        <p className="text-center text-5xl">{allocatedSeats.join(', ')}</p>
+      </div>
+      <div className='pt-10'><SectionHeader heading={heading} description={description} /></div>
       <div className="section-gap flex flex-col items-center md:flex-row space-x-0 md:space-x-24 bus-container">
         <div className="w-full md:w-[75%]">
           <div className="flex flex-col md:flex-row justify-between">
@@ -88,7 +126,7 @@ const AllService = ({
           </div>
         </div>
       </div>
-      <Service seatPrice ={ticketPrice} />
+      <Service seatPrice={ticketPrice} />
     </section>
   );
 };
