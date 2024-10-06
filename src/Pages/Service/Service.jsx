@@ -115,7 +115,6 @@ const Service = ({ seatPrice }) => {
         }
     };
 
-
     return (
         <div>
 
