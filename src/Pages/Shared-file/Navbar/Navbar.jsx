@@ -7,7 +7,6 @@ import AuthButton from '../../../Authentication/AuthButton/AuthButton';
 const links = [
   { name: 'Home', path: '/' },
   { name: 'About', path: '/about' },
-  { name: 'Service', path: '/service' },
   { name: 'FAQ', path: '/faq' },
   { name: 'Contact', path: '/contact' },
 ];

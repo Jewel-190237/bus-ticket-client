@@ -7,9 +7,10 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import { Form, Input } from "antd";
 import Swal from 'sweetalert2';
+import { useNavigate } from "react-router-dom";
 
 
-const Service = ({ seatPrice }) => {
+const Service = ({ seatPrice, busName }) => {
     const [activeSeats, setActiveSeats] = useState([]);
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
@@ -82,9 +83,53 @@ const Service = ({ seatPrice }) => {
         location: location,
         address: address,
         email: email,
+        busName: busName
     };
 
+    useEffect(() => {
+        const fetchPaidSeats = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await axios.get(`http://localhost:5000/allocated-seats/${busName}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}` // Add Authorization header
+                    },
+                });
+
+                // Check if the response data is an array
+                if (Array.isArray(response.data)) {
+                    const seats = response.data.map(item => item.allocatedSeat).flat(); // Extract and flatten seat arrays
+                    setAllocatedSeats(seats);
+                } else {
+                    setError('Unexpected response format.');
+                }
+
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching paid seats:', error); // Log error details
+                setError('Failed to load allocated seats.');
+                setLoading(false);
+            }
+        };
+
+        fetchPaidSeats();
+    }, [busName]);
+
+    const navigate = useNavigate();
+
+    const isLoggedIn = () => {
+        const token = localStorage.getItem("token");
+        return !!token;
+    };
+
+
     const onFinish = async () => {
+        if (!isLoggedIn()) {
+            navigate('/signup');
+            return;
+        }
+
         try {
             console.log(payment);
 
@@ -119,30 +164,6 @@ const Service = ({ seatPrice }) => {
             });
         }
     };
-
-    useEffect(() => {
-        const fetchPaidSeats = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                const response = await axios.get('http://localhost:5000/allocated-seats', {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}` // Add Authorization header
-                    },
-                });
-                // Assuming response.data is an array of seat objects
-                const seats = response.data.map(item => item.allocatedSeat).flat(); // Extract and flatten seat arrays
-                setAllocatedSeats(seats);
-                setLoading(false);
-            } catch (error) {
-                setError('Failed to load allocated seats.');
-                setLoading(false);
-            }
-        };
-
-        fetchPaidSeats();
-    }, []);
-
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;

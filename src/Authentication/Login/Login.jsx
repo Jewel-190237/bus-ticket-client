@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Form, Input } from 'antd';
 import login from '../../assets/service/card1.png';
@@ -11,6 +11,10 @@ const Login = () => {
     const [active, setActive] = useState('member');
     const [form] = Form.useForm();
     const navigate = useNavigate();
+
+    const returnLocation = useLocation
+    const from = returnLocation.state?.from?.pathname || '/';
+
 
     const handleClick = (value) => {
         setRole(value);
@@ -38,7 +42,7 @@ const Login = () => {
 
             localStorage.setItem('token', response.data.token);
 
-            navigate('/');
+            navigate(from, { replace: true });
         } catch (error) {
             console.error('Login error:', error);
 

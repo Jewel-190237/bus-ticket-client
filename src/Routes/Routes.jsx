@@ -20,6 +20,11 @@ import ForgetPassword from "../Authentication/forgatpassword/ForgetPawwsord";
 import ResetPassword from "../Authentication/ResetPassword/ResetPassword";
 import PaymentSuccess from "../Pages/Payment/PaymentSuccess";
 import PaymentFail from "../Pages/Payment/PaymentFail";
+import AddBus from "../Pages/Dashboard/AddBus/AddBus";
+import AddRoute from "../Pages/Dashboard/AddRoute/AddRoute";
+import RouteManage from "../Pages/Dashboard/RouteManage/RouteManage";
+import ManageBus from "../Pages/Dashboard/ManageBus/ManageBus";
+import Profile from "../Pages/Dashboard/Profile/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -40,7 +45,7 @@ export const router = createBrowserRouter([
         element: <SignUp />
       },
       {
-        path: '/service',
+        path: '/service/:id',
         element: <AllService />
       },
       {
@@ -89,6 +94,26 @@ export const router = createBrowserRouter([
       {
         path: 'allMaster',
         element: <AllMaster/>
+      },
+      {
+        path: 'addBus',
+        element: <AddBus/>
+      },
+      {
+        path: 'manageBus',
+        element: <ManageBus/>
+      },
+      {
+        path: 'addRoute',
+        element: <AddRoute/>
+      },
+      {
+        path: 'routeManage',
+        element: <RouteManage/>
+      },
+      {
+        path: 'profile',
+        element: <Profile/>
       },
     ]
   }])

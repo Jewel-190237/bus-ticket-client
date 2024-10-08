@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import { Form, Input } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo.png'
 import Swal from 'sweetalert2';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
@@ -19,6 +19,10 @@ const SignUp = () => {
     const [role, setRole] = useState('member');
     const [active, setActive] = useState('member');
     const [form] = Form.useForm();
+
+    const returnLocation = useLocation();
+    const from = returnLocation.state?.from?.pathname || '/';
+
 
     const handleClick = (value) => {
         setRole(value);
@@ -46,7 +50,7 @@ const SignUp = () => {
                     showConfirmButton: true,
                     text:'Please Login Now'
                 });
-                navigate('/login');
+                navigate('/login', { state: { from } });
             }
 
         } catch (error) {
