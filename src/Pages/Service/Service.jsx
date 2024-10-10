@@ -200,7 +200,7 @@ const Service = ({ seatPrice, busName }) => {
                                     key={index}
                                     onClick={() => handleClick(seat)}
                                     disabled={allocatedSeats.includes(seat)} // Disable the button if seat is allocated
-                                    className={`seat seat-text ${activeSeats.includes(seat) ? '!bg-primary !text-white' : ''} ${allocatedSeats.includes(seat) ? '!bg-gray-300 !cursor-not-allowed' : ''}`}
+                                    className={`seat seat-text ${activeSeats.includes(seat) ? '!bg-primary !text-white' : ''} ${allocatedSeats.includes(seat) ? '!bg-gray-300 !cursor-not-allowed !border-4 border-red-500' : ''}`}
                                 >
                                     {seat}
                                 </button>
@@ -212,7 +212,7 @@ const Service = ({ seatPrice, busName }) => {
                                     key={index}
                                     onClick={() => handleClick(seat)}
                                     disabled={allocatedSeats.includes(seat)} // Disable the button if seat is allocated
-                                    className={`seat seat-text ${activeSeats.includes(seat) ? '!bg-primary !text-white' : ''} ${allocatedSeats.includes(seat) ? '!bg-gray-300 !cursor-not-allowed' : ''}`}
+                                    className={`seat seat-text ${activeSeats.includes(seat) ? '!bg-primary !text-white' : ''} ${allocatedSeats.includes(seat) ? '!bg-gray-300 !cursor-not-allowed !border-4 border-red-500' : ''}`}
                                 >
                                     {seat}
                                 </button>

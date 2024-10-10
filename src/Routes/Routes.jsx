@@ -25,6 +25,7 @@ import AddRoute from "../Pages/Dashboard/AddRoute/AddRoute";
 import RouteManage from "../Pages/Dashboard/RouteManage/RouteManage";
 import ManageBus from "../Pages/Dashboard/ManageBus/ManageBus";
 import Profile from "../Pages/Dashboard/Profile/Profile";
+import Payment from "../Pages/Dashboard/Payment/Payment";
 
 export const router = createBrowserRouter([
   {
@@ -114,6 +115,10 @@ export const router = createBrowserRouter([
       {
         path: 'profile',
         element: <Profile/>
+      },
+      {
+        path: 'payment',
+        element: <Payment/>
       },
     ]
   }])
