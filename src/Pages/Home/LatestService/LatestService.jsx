@@ -51,7 +51,7 @@ const LatestService = () => {
                                 totalSeat={service.totalSeats}
                                 img={service.imageUrl}
                                 _id={service._id}
-                                busName = {service.busName}
+                                busName={service.busName}
                             />
                         ))}
                     </div>
@@ -61,8 +61,10 @@ const LatestService = () => {
                             <ServiceCard
                                 key={service._id}
                                 startTime={service.startTime}
-                                availableSeat={service.totalSeats}
+                                totalSeat={service.totalSeats}
                                 img={service.imageUrl}
+                                _id={service._id}
+                                busName={service.busName}
                             />
                         ))}
                     </div>
