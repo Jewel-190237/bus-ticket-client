@@ -44,19 +44,24 @@ const AllUsers = () => {
                         'Authorization': `Bearer ${token}`
                     },
                 })
-                    .then(response => response.json())
-                    .then(result => {
-                        if (result.deletedCount > 0) {
-                            Swal.fire("Deleted!", `${user.name} has been deleted.`, "success");
-                            setUsers(prevUsers => prevUsers.filter(u => u._id !== user._id));
-                        } else {
-                            Swal.fire("Error!", "Failed to delete the user.", "error");
-                        }
-                    })
-                    .catch(error => console.error("Error deleting user:", error));
+                .then(response => response.json())
+                .then(result => {
+                    if (result.message === 'User deleted successfully') {
+                        Swal.fire("Deleted!", `${user.name} has been deleted.`, "success");
+                        // Update the state to remove the deleted user from the list
+                        setUsers(prevUsers => prevUsers.filter(u => u._id !== user._id));
+                    } else {
+                        Swal.fire("Error!", "Failed to delete the user.", "error");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error deleting user:", error);
+                    Swal.fire("Error!", "An error occurred while deleting the user.", "error");
+                });
             }
         });
     };
+    
 
     // Pagination logic
     const memberUsers = users.filter(user => user.role === "member");

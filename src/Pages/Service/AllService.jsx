@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { LuBus } from "react-icons/lu";
@@ -15,29 +15,30 @@ const AllService = () => {
     const [allocatedSeats, setAllocatedSeats] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [routes, setRoutes] = useState([]);
+    const [selectedRoute, setSelectedRoute] = useState("");
 
-    // First useEffect for fetching service data
+    // Fetch service data
     useEffect(() => {
         const fetchServiceData = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/buses/${id}`); // Update the URL as needed
+                const response = await fetch(`http://localhost:5000/buses/${id}`);
                 if (!response.ok) throw new Error('Failed to fetch data');
                 const data = await response.json();
-                setServiceData(data); // Set the fetched data
-                setTicketPrice(data.price || 500); // Assuming price is part of the response
+                setServiceData(data);
+                setTicketPrice(data.price || 1000); // Default price
             } catch (error) {
                 console.error("Error fetching service data:", error);
-                setError('Failed to load service data.'); // Set error message
-                setLoading(false); // Update loading state
+                setError('Failed to load service data.');
+                setLoading(false);
             }
         };
 
         fetchServiceData();
     }, [id]);
 
-    // Second useEffect for fetching allocated seats
+    // Fetch allocated seats
     const busName = serviceData?.busName;
-    console.log(busName);
     useEffect(() => {
         const fetchPaidSeats = async () => {
             try {
@@ -45,13 +46,12 @@ const AllService = () => {
                 const response = await axios.get(`http://localhost:5000/allocated-seats/${busName}`, {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}` // Add Authorization header
+                        'Authorization': `Bearer ${token}`
                     },
                 });
 
-                // Check if the response data is an array
                 if (Array.isArray(response.data)) {
-                    const seats = response.data.map(item => item.allocatedSeat).flat(); // Extract and flatten seat arrays
+                    const seats = response.data.map(item => item.allocatedSeat).flat();
                     setAllocatedSeats(seats);
                 } else {
                     setError('Unexpected response format.');
@@ -59,7 +59,7 @@ const AllService = () => {
 
                 setLoading(false);
             } catch (error) {
-                console.error('Error fetching paid seats:', error); // Log error details
+                console.error('Error fetching paid seats:', error);
                 setError('Failed to load allocated seats.');
                 setLoading(false);
             }
@@ -68,17 +68,49 @@ const AllService = () => {
         fetchPaidSeats();
     }, [busName]);
 
+    // Fetch routes matching the bus name
+    useEffect(() => {
+        const fetchRoutes = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/routes');
+                const allRoutes = response.data;
+
+                // Filter routes that match the current bus name
+                const filteredRoutes = allRoutes.filter(route => route.busName === busName);
+                setRoutes(filteredRoutes[0]?.routes || []); // Set the routes of the matched bus
+            } catch (error) {
+                console.error('Error fetching routes:', error);
+                setError('Failed to load routes.');
+            }
+        };
+
+        if (busName) {
+            fetchRoutes();
+        }
+    }, [busName]);
+
+    // Handle route change and update ticket price
+    const handleRouteChange = (e) => {
+        const selectedRouteName = e.target.value;
+        setSelectedRoute(selectedRouteName);
+
+        // Find the price for the selected route
+        const selectedRouteData = routes.find(route => route.routeName === selectedRouteName);
+        if (selectedRouteData) {
+            setTicketPrice(selectedRouteData.price); // Update the price based on the route
+        }
+    };
+
     // Handle loading and error states
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
 
-    if (!serviceData) return <div>No service data available.</div>; // Additional check for service data
+    if (!serviceData) return <div>No service data available.</div>;
 
     const {
-        heading = `Bus No: ${serviceData.busName}`, // Assuming busNumber is part of the fetched data
+        heading = `Bus No: ${serviceData.busName}`,
         description = serviceData.description || 'The latest Koyra to Dhaka bus offers comfortable seating, air conditioning, and Wi-Fi, ensuring a smooth ride with daily departures for all travelers!',
         totalSeat = serviceData.totalSeats || 45,
-        routes = serviceData.routes || [],
         departureTime = serviceData.startTime || '9:00 AM',
         estimateTime = serviceData.estimatedTime || '11 Hours',
         startingPoint = serviceData.startingPoint || 'Koyra',
@@ -93,7 +125,7 @@ const AllService = () => {
             <div className='pt-10'>
                 <SectionHeader heading={heading} description={description} />
             </div>
-            <div className="my-10">
+            <div className="my-10 max-w-[1320px] mx-auto">
                 <p className="text-center text-5xl">{allocatedSeats.length}</p>
                 <p className="text-center text-5xl">{allocatedSeats.join(', ')}</p>
             </div>
@@ -111,14 +143,10 @@ const AllService = () => {
                     </div>
                     <div className="bg-[#F7F8F8] rounded-2xl mt-10 px-8">
                         <div className="py-6 flex items-center justify-between border-b border-dashed border-[#03071233]">
-                            <p className="description">Route</p>
-                            <select
-                                // value={selectedRoute}
-                                // onChange={handleRouteChange}
-                                className="custom-select !text-[#030712] !text-right p-2 border rounded-lg"
-                            >
+                            <p className="description">Select Route</p>
+                            <select className="custom-select !text-[#030712] !text-right p-2 border rounded-lg" value={selectedRoute} onChange={handleRouteChange}>
                                 {routes.map((route, index) => (
-                                    <option key={index} value={route}>{route}</option>
+                                    <option key={index} value={route.routeName}>{route.routeName}</option>
                                 ))}
                             </select>
                         </div>
@@ -130,7 +158,6 @@ const AllService = () => {
                             <p className="description !text-center bg-[#0307120D] w-full md:w-1/4 px-3 py-4 rounded-xl">
                                 Starting Point - {startingPoint}
                             </p>
-
                             <p className="description mt-6 md:mt-0 !text-center bg-[#0307120D] w-full md:w-1/4 px-3 py-4 rounded-xl">
                                 Est. Time {estimateTime}
                             </p>

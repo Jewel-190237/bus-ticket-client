@@ -35,47 +35,36 @@ const AllMaster = () => {
     const handleDelete = (user) => {
         Swal.fire({
             title: "Are you sure?",
-            text: `You won't be able to revert this! You are deleting ${user.name}`,
+            text: `You are about to delete ${user.name}. This action cannot be undone.`,
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!",
+            confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                const token = localStorage.getItem("token");
+                const token = localStorage.getItem('token');
                 fetch(`http://localhost:5000/users/${user._id}`, {
                     method: "DELETE",
                     headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
                     },
                 })
-                    .then((response) => response.json())
-                    .then((result) => {
-                        if (result.deletedCount > 0) {
-                            Swal.fire({
-                                title: "Deleted!",
-                                text: `${user.name} has been deleted.`,
-                                icon: "success",
-                            });
-                            setUsers((prevUsers) => prevUsers.filter((u) => u._id !== user._id));
-                        } else {
-                            Swal.fire({
-                                title: "Error!",
-                                text: "Failed to delete user",
-                                icon: "error",
-                            });
-                        }
-                    })
-                    .catch((error) => {
-                        console.error("Error deleting user:", error);
-                        Swal.fire({
-                            title: "Error!",
-                            text: "Failed to delete user",
-                            icon: "error",
-                        });
-                    });
+                .then(response => response.json())
+                .then(result => {
+                    if (result.message === 'User deleted successfully') {
+                        Swal.fire("Deleted!", `${user.name} has been deleted.`, "success");
+                        // Update the state to remove the deleted user from the list
+                        setUsers(prevUsers => prevUsers.filter(u => u._id !== user._id));
+                    } else {
+                        Swal.fire("Error!", "Failed to delete the user.", "error");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error deleting user:", error);
+                    Swal.fire("Error!", "An error occurred while deleting the user.", "error");
+                });
             }
         });
     };

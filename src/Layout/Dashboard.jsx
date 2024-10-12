@@ -15,13 +15,13 @@ const Dashboard = () => {
     const navItems = [
         { to: '/dashboard/adminHome', label: 'Admin Home', icon: FaHome },
         { to: '/dashboard/profile', label: 'Profile', icon: FaUser },
+        { to: '/dashboard/payment', label: 'Payment', icon: FaMoneyCheckAlt },
         { to: '/dashboard/addBus', label: 'Add A Bus', icon: FaBus  },
         { to: '/dashboard/manageBus', label: 'Manage Bus', icon: GiBus },
         { to: '/dashboard/addRoute', label: 'Add Route', icon: FaBook },
         { to: '/dashboard/routeManage', label: 'Route Management', icon: FaBook },
         { to: '/dashboard/allUsers', label: 'All Users Management', icon: FaUsers },
         { to: '/dashboard/allMaster', label: 'All Master Management', icon: GiPoliceOfficerHead },
-        { to: '/dashboard/payment', label: 'Payment', icon: FaMoneyCheckAlt },
         { to: '/', label: 'Home', icon: FaHome },
     ];
 

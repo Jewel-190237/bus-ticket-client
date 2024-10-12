@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { MdOutlineSystemUpdateAlt } from "react-icons/md";
 import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 
 const ManageBus = () => {
     const [buses, setBuses] = useState([]);
@@ -78,13 +79,12 @@ const ManageBus = () => {
         }
     };
 
-    // Handle showing modal and selecting bus to update
     const handleUpdate = (bus) => {
         setSelectedBus(bus);
-        setShowModal(true); // Show modal
+        setShowModal(true); // 
     };
 
-    // Handle form submission to update bus details
+
     const handleUpdateSubmit = async (e) => {
         e.preventDefault();
         const token = localStorage.getItem('token');
@@ -138,7 +138,9 @@ const ManageBus = () => {
             <div className="w-full px-4 lg:px-10">
                 <div className="flex justify-between">
                     <h2 className="text-2xl lg:text-4xl mb-4 font-semibold">Total Buses: {buses.length}</h2>
-                    <button className="button px-5 py-3 mb-6">Add Bus</button>
+                    <Link to="/dashboard/addBus">
+                        <button className="button px-5 py-3 mb-6"> Add Bus </button>
+                    </Link>
                 </div>
 
                 <div className="overflow-x-auto">
