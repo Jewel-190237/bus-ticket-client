@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { LuBus } from "react-icons/lu";
@@ -26,7 +25,6 @@ const AllService = () => {
                 if (!response.ok) throw new Error('Failed to fetch data');
                 const data = await response.json();
                 setServiceData(data);
-                setTicketPrice(data.price || 1000); // Default price
             } catch (error) {
                 console.error("Error fetching service data:", error);
                 setError('Failed to load service data.');
@@ -68,7 +66,7 @@ const AllService = () => {
         fetchPaidSeats();
     }, [busName]);
 
-    // Fetch routes matching the bus name
+    // Fetch routes matching the bus name and set default price
     useEffect(() => {
         const fetchRoutes = async () => {
             try {
@@ -76,8 +74,21 @@ const AllService = () => {
                 const allRoutes = response.data;
 
                 // Filter routes that match the current bus name
-                const filteredRoutes = allRoutes.filter(route => route.busName === busName);
-                setRoutes(filteredRoutes[0]?.routes || []); // Set the routes of the matched bus
+                const filteredRoutes = allRoutes.filter(route => route.busName === busName && route.routes && route.routes.length > 0);
+
+                // Set routes and default ticket price if available
+                if (filteredRoutes.length > 0) {
+                    const busRoutes = filteredRoutes[0].routes;
+                    setRoutes(busRoutes);
+
+                    // Set default ticket price to the first route's price
+                    if (busRoutes.length > 0) {
+                        setTicketPrice(busRoutes[0].price);
+                        setSelectedRoute(busRoutes[0].routeName); // Set the default selected route
+                    }
+                } else {
+                    setRoutes([]);
+                }
             } catch (error) {
                 console.error('Error fetching routes:', error);
                 setError('Failed to load routes.');
@@ -144,11 +155,23 @@ const AllService = () => {
                     <div className="bg-[#F7F8F8] rounded-2xl mt-10 px-8">
                         <div className="py-6 flex items-center justify-between border-b border-dashed border-[#03071233]">
                             <p className="description">Select Route</p>
-                            <select className="custom-select !text-[#030712] !text-right p-2 border rounded-lg" value={selectedRoute} onChange={handleRouteChange}>
-                                {routes.map((route, index) => (
-                                    <option key={index} value={route.routeName}>{route.routeName}</option>
-                                ))}
-                            </select>
+
+                            {routes.length > 0 ? (
+                                <select
+                                    className="custom-select !text-[#030712] !text-right p-2 border rounded-lg"
+                                    value={selectedRoute}
+                                    onChange={handleRouteChange}
+                                >
+                                    {routes.map((route, index) => (
+                                        <option key={index} value={route.routeName}>
+                                            {route.routeName}
+                                        </option>
+                                    ))}
+                                </select>
+                            ) : (
+                                <p>No routes available</p>
+                            )}
+
                         </div>
                         <div className="py-6 flex items-center justify-between border-b border-dashed border-[#03071233]">
                             <p className="description">Starting Time</p>

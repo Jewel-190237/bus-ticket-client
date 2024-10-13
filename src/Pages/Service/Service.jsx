@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { TbArmchair } from "react-icons/tb";
 import { GiBusDoors } from "react-icons/gi";
