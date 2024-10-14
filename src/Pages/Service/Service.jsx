@@ -25,6 +25,7 @@ const Service = ({ seatPrice, busName }) => {
     const [role, setRole] = useState(null);
     const [masterUsers, setMasterUsers] = useState([]);
     const [selectedMaster, setSelectedMaster] = useState(null);
+    const [status, setStatus] = useState(null);
 
     const leftSeats = [
         'A1', 'A2',
@@ -120,7 +121,6 @@ const Service = ({ seatPrice, busName }) => {
             try {
                 const token = localStorage.getItem('token');
                 if (!token) {
-                    // If no token, don't make the request and keep the role as null
                     return;
                 }
 
@@ -129,10 +129,10 @@ const Service = ({ seatPrice, busName }) => {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                setRole(response.data.role); // Set the user's role
+                setRole(response.data.role); 
+                setStatus(response.data.status);
             } catch (error) {
                 console.error('Error fetching user role:', error);
-                // Set role to null in case of error or failed login
                 setRole(null);
             }
         };
@@ -145,11 +145,11 @@ const Service = ({ seatPrice, busName }) => {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                setMasterUsers(response.data);  // Set the fetched users
+                setMasterUsers(response.data);  
             } catch (error) {
                 console.error('Error fetching master users:', error);
             } finally {
-                setLoading(false);  // Stop loading
+                setLoading(false); 
             }
         };
         fetchMasterUsers();
@@ -280,7 +280,7 @@ const Service = ({ seatPrice, busName }) => {
                                 <p className="description !text-[#030712] !text-right">{totalPrice} BDT</p>
                             </div>
 
-                            {role === 'admin' || role === 'master' ? (
+                            {role === 'admin' || (role === 'master' && status === 'approved') ? (
                                 <div className="flex items-center">
                                     <input
                                         className="w-full bg-white text-black p-4 border rounded-l-xl"
