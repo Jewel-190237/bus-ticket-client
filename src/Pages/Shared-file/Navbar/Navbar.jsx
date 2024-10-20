@@ -59,9 +59,9 @@ const Navbar = () => {
           />
         </a>
 
-        <div className="lg:hidden absolute left-1/2 transform -translate-x-1/2 ml-8">
+        <div className="lg:hidden absolute left-36 sm:left-1/2 transform -translate-x-1/2 ml-8">
           <Link to='/ticket'>
-            <button className="border-2 border-[#E67529]  animate-pulse-scale px-4 md:px-8 py-4 rounded-[4px] hover:bg-[#E67529] hover:text-white text-primary transition">
+            <button className="border-2 border-[#E67529]  animate-pulse-scale px-2 sm:px-4 md:px-8 py-2 sm:py-4 rounded-[4px] hover:bg-[#E67529] hover:text-white text-primary transition">
               Buy Tickets
             </button>
           </Link>
@@ -89,7 +89,7 @@ const Navbar = () => {
             <AuthButton />
           </div>
           <div className="hidden lg:flex relative justify-center lg:justify-end">
-          <Link to='/ticket'>
+            <Link to='/ticket'>
             <button className="border-2 border-[#E67529]  animate-pulse-scale px-4 md:px-8 py-4 rounded-[4px] hover:bg-[#E67529] hover:text-white text-primary transition">
               Buy Tickets
             </button>

@@ -52,7 +52,7 @@ const AuthButton = () => {
     return (
         <>
             {isAuthenticated ? (
-                <div className="relative top-3 ">
+                <div className="relative right-10 md:right-32 lg:right-0 lg:top-3 ">
 
                     <FaUserCircle 
                         className="text-4xl cursor-pointer"
