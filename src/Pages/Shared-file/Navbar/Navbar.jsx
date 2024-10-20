@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdCloseCircle } from 'react-icons/io';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AuthButton from '../../../Authentication/AuthButton/AuthButton';
 
 const links = [
@@ -60,9 +60,11 @@ const Navbar = () => {
         </a>
 
         <div className="lg:hidden absolute left-1/2 transform -translate-x-1/2 ml-8">
-          <button className="border-2 border-[#E67529]  animate-pulse-scale px-4 md:px-8 py-4 rounded-[4px] hover:bg-[#E67529] hover:text-white text-primary transition">
-            Buy Tickets
-          </button>
+          <Link to='/ticket'>
+            <button className="border-2 border-[#E67529]  animate-pulse-scale px-4 md:px-8 py-4 rounded-[4px] hover:bg-[#E67529] hover:text-white text-primary transition">
+              Buy Tickets
+            </button>
+          </Link>
         </div>
 
         <div className="lg:hidden flex flex-col justify-center">
@@ -87,11 +89,11 @@ const Navbar = () => {
             <AuthButton />
           </div>
           <div className="hidden lg:flex relative justify-center lg:justify-end">
-            <button
-              className="border-2 border-[#E67529] animate-pulse-scale  px-4 md:px-8 py-4 rounded-[4px] hover:bg-[#E67529] hover:text-white text-primary"
-            >
+          <Link to='/ticket'>
+            <button className="border-2 border-[#E67529]  animate-pulse-scale px-4 md:px-8 py-4 rounded-[4px] hover:bg-[#E67529] hover:text-white text-primary transition">
               Buy Tickets
             </button>
+          </Link>
           </div>
         </div>
 

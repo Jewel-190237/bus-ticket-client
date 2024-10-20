@@ -27,6 +27,7 @@ import ManageBus from "../Pages/Dashboard/ManageBus/ManageBus";
 import Profile from "../Pages/Dashboard/Profile/Profile";
 import Payment from "../Pages/Dashboard/Payment/Payment";
 import CounterPayment from "../Pages/Dashboard/CounterPayment/CounterPayment";
+import Ticket from "../Pages/Ticket/Ticket";
 
 export const router = createBrowserRouter([
   {
@@ -50,9 +51,14 @@ export const router = createBrowserRouter([
         path: '/service/:id',
         element: <AllService />
       },
+      
       {
         path: '/about',
         element: <About />
+      },
+      {
+        path: '/ticket',
+        element: <Ticket/>
       },
       {
         path: '/faq',
