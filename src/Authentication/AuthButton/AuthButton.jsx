@@ -30,6 +30,7 @@ const AuthButton = () => {
 
     const handleSignOut = () => {
         localStorage.removeItem('token'); 
+        localStorage.removeItem('userId'); 
         Swal.fire({
             icon: 'success',
             title: 'Signed out successfully',

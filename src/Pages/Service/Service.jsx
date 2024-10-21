@@ -25,7 +25,6 @@ const Service = ({ seatPrice, busName }) => {
     const [role, setRole] = useState(null);
     const [masterUsers, setMasterUsers] = useState([]);
     const [selectedMaster, setSelectedMaster] = useState(null);
-    const [status, setStatus] = useState(null);
 
     const leftSeats = [
         'A1', 'A2',
@@ -120,17 +119,17 @@ const Service = ({ seatPrice, busName }) => {
         const fetchUserRole = async () => {
             try {
                 const token = localStorage.getItem('token');
+                const userId = localStorage.getItem('userId');
                 if (!token) {
                     return;
                 }
 
-                const response = await axios.get('http://localhost:5000/user-role', {
+                const response = await axios.get(`http://localhost:5000/user-role/${userId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                setRole(response.data.role); 
-                setStatus(response.data.status);
+                setRole(response.data.role);
             } catch (error) {
                 console.error('Error fetching user role:', error);
                 setRole(null);
@@ -145,11 +144,11 @@ const Service = ({ seatPrice, busName }) => {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                setMasterUsers(response.data);  
+                setMasterUsers(response.data);
             } catch (error) {
                 console.error('Error fetching master users:', error);
             } finally {
-                setLoading(false); 
+                setLoading(false);
             }
         };
         fetchMasterUsers();
@@ -280,24 +279,30 @@ const Service = ({ seatPrice, busName }) => {
                                 <p className="description !text-[#030712] !text-right">{totalPrice} BDT</p>
                             </div>
 
-                            {role === 'admin' || (role === 'master' && status === 'approved') ? (
-                                <div className="flex items-center">
-                                    <input
-                                        className="w-full bg-white text-black p-4 border rounded-l-xl"
-                                        placeholder="Enter Discount price"
-                                        type="number"
-                                        value={inputValue}
-                                        onChange={handleChange}
-                                    />
-                                    <button
-                                        className={`p-4 bg-primary text-white rounded-r-xl ${!inputValue ? 'opacity-40 cursor-not-allowed' : ''}`}
-                                        onClick={applyDiscount}
-                                        disabled={!inputValue}
-                                    >
-                                        Apply
-                                    </button>
+                            {role === 'admin' || (role === 'master') ? (
+                                <div className="flex flex-col items-start">
+                                    <div className="flex items-center w-full">
+                                        <input
+                                            className={`w-full bg-white text-black p-4 border ${inputValue > 50 ? 'border-red-500' : ''} rounded-l-xl`}
+                                            placeholder="Enter Discount price"
+                                            type="number"
+                                            value={inputValue}
+                                            onChange={handleChange}
+                                        />
+                                        <button
+                                            className={`p-4 bg-primary text-white rounded-r-xl ${(!inputValue || inputValue > 50) ? 'opacity-40 cursor-not-allowed' : ''}`}
+                                            onClick={applyDiscount}
+                                            disabled={!inputValue || inputValue > 50}
+                                        >
+                                            Apply
+                                        </button>
+                                    </div>
+                                    {inputValue > 50 && (
+                                        <p className="text-red-500 mt-2">Please enter a value less than or equal to 50</p>
+                                    )}
                                 </div>
                             ) : null}
+
 
                             {/* Grand Total */}
                             <div className="py-6 flex items-center justify-between">
@@ -317,7 +322,7 @@ const Service = ({ seatPrice, busName }) => {
                                 <Form.Item
                                     label="Email: "
                                     name="email"
-                                    rules={[{ required: true, message: 'Please input your Email!' }]}
+
                                 >
                                     <Input onChange={(e) => setEmail(e.target.value)} placeholder='Input your Email' type="email" className="p-4" />
                                 </Form.Item>

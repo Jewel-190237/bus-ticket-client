@@ -41,6 +41,9 @@ const PaymentSuccess = () => {
             
             // Adding user details
             doc.text(`Name: ${orderDetails.name}`, 20, 70);
+            doc.text(`Price: ${orderDetails.price}`, 20, 70);
+            doc.text(`Bus Name: ${orderDetails.busName}`, 20, 70);
+            doc.text(`Referance: ${orderDetails.counterMaster}`, 20, 70);
             doc.text(`Email: ${orderDetails.email}`, 20, 80);
             doc.text(`Phone: ${orderDetails.phone}`, 20, 90);
             doc.text(`Address: ${orderDetails.address}`, 20, 100);
