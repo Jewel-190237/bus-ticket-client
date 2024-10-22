@@ -70,6 +70,8 @@ const PaymentSuccess = () => {
             doc.text(`Address: ${orderDetails.address}`, leftColumnX, yPosition);
             yPosition += 10;
             doc.text(`Route: ${orderDetails.selectedRoute}`, leftColumnX, yPosition);
+            yPosition += 10;
+            doc.text(`Date: ${orderDetails.date}`, leftColumnX, yPosition);
 
             // Bus Information and Seat/Price Info (right column)
             yPosition = 110; // Reset Y position for the right column
@@ -114,7 +116,7 @@ const PaymentSuccess = () => {
                 <p className="mt-5 text-xl text-green-700 text-center">Your transaction ID: {tran_id}</p>
 
                 <button className="mt-10 button w-full" onClick={downloadInvoice}>
-                    Download Invoice
+                    Download Ticket
                 </button>
 
                 <Link to='/'><button className="mt-10 button w-full">Continue</button></Link>

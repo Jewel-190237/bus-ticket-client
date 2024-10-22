@@ -8,8 +8,7 @@ import { Form, Input, Select } from "antd";
 import Swal from 'sweetalert2';
 import { useNavigate } from "react-router-dom";
 
-
-const Service = ({ seatPrice, busName, selectedRoute }) => {
+const Service = ({ seatPrice, busName, selectedRoute, selectedDate }) => {
     const [activeSeats, setActiveSeats] = useState([]);
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
@@ -25,6 +24,7 @@ const Service = ({ seatPrice, busName, selectedRoute }) => {
     const [role, setRole] = useState(null);
     const [masterUsers, setMasterUsers] = useState([]);
     const [selectedMaster, setSelectedMaster] = useState(null);
+
 
     const leftSeats = [
         'A1', 'A2',
@@ -77,7 +77,6 @@ const Service = ({ seatPrice, busName, selectedRoute }) => {
     const totalPrice = activeSeats.length * seatPrice;
     const grandTotal = totalPrice - discount;
 
-
     const payment = {
         price: grandTotal,
         allocatedSeat: activeSeats,
@@ -88,7 +87,8 @@ const Service = ({ seatPrice, busName, selectedRoute }) => {
         email: email,
         busName: busName,
         counterMaster: selectedMaster,
-        selectedRoute: selectedRoute
+        selectedRoute: selectedRoute,
+        date: selectedDate
     };
 
     useEffect(() => {
@@ -100,6 +100,9 @@ const Service = ({ seatPrice, busName, selectedRoute }) => {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`
                     },
+                    params: {
+                        selectedDate // Send selected date as a query parameter
+                    }
                 });
 
                 if (Array.isArray(response.data)) {
@@ -155,7 +158,7 @@ const Service = ({ seatPrice, busName, selectedRoute }) => {
         fetchMasterUsers();
         fetchUserRole();
         fetchPaidSeats();
-    }, [busName]);
+    }, [busName, selectedDate]);
 
     const navigate = useNavigate();
 
@@ -218,6 +221,7 @@ const Service = ({ seatPrice, busName, selectedRoute }) => {
                     <div className="my-10">
                         <p className="text-center text-5xl">{allocatedSeats.length}</p>
                         <p className="text-center text-5xl">{allocatedSeats.join(', ')}</p>
+                        
                     </div>
                     <h3 className="ticket-header">Select your seat</h3>
                     <div className="flex items-center justify-between font-medium text-[16px] md:text-2xl py-5 border-dashed border-b border-black">

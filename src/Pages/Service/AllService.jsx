@@ -6,6 +6,9 @@ import SectionHeader from "../Shared-file/SectionHeader";
 import Service from "../Service/Service";
 import BasicHeader from "../Shared-file/BasicHeader";
 import axios from "axios";
+import moment from 'moment';
+import { DatePicker } from "antd";
+
 
 const AllService = () => {
     const { id } = useParams();
@@ -37,6 +40,14 @@ const AllService = () => {
 
     // Fetch allocated seats
     const busName = serviceData?.busName;
+
+    const dateFormatList = ['DD/MM/YYYY'];
+    const [selectedDate, setSelectedDate] = useState(moment().format('DD/MM/YYYY'));
+    const handleDateChange = (date) => {
+        const select = date ? date.format('DD/MM/YYYY') : null;
+        setSelectedDate(select);
+    };
+
     useEffect(() => {
         const fetchPaidSeats = async () => {
             try {
@@ -46,6 +57,9 @@ const AllService = () => {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`
                     },
+                    params: {
+                        selectedDate // Send selected date as a query parameter
+                    }
                 });
 
                 if (Array.isArray(response.data)) {
@@ -64,7 +78,7 @@ const AllService = () => {
         };
 
         fetchPaidSeats();
-    }, [busName]);
+    }, [busName, selectedDate]);
 
     // Fetch routes matching the bus name and set default price
     useEffect(() => {
@@ -140,6 +154,9 @@ const AllService = () => {
                 <p className="text-center text-5xl">{allocatedSeats.length}</p>
                 <p className="text-center text-5xl">{allocatedSeats.join(', ')}</p>
             </div>
+            <div className="flex justify-center mt-5">
+                <DatePicker className="p-3 w-full md:w-1/2 lg:w-[20%]" onChange={handleDateChange} format={dateFormatList} />
+            </div>
             <div className="section-gap flex flex-col items-center md:flex-row space-x-0 md:space-x-24 bus-container">
                 <div className="w-full md:w-[75%]">
                     <div className="flex flex-col md:flex-row justify-between">
@@ -202,7 +219,7 @@ const AllService = () => {
                     </div>
                 </div>
             </div>
-            <Service seatPrice={ticketPrice} busName={busName} selectedRoute={selectedRoute} />
+            <Service seatPrice={ticketPrice} busName={busName} selectedRoute={selectedRoute} selectedDate={selectedDate} />
         </section>
     );
 };
