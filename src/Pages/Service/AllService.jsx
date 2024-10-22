@@ -202,7 +202,7 @@ const AllService = () => {
                     </div>
                 </div>
             </div>
-            <Service seatPrice={ticketPrice} busName={busName} />
+            <Service seatPrice={ticketPrice} busName={busName} selectedRoute={selectedRoute} />
         </section>
     );
 };

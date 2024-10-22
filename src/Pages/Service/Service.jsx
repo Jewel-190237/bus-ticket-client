@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 import { useNavigate } from "react-router-dom";
 
 
-const Service = ({ seatPrice, busName }) => {
+const Service = ({ seatPrice, busName, selectedRoute }) => {
     const [activeSeats, setActiveSeats] = useState([]);
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
@@ -87,7 +87,8 @@ const Service = ({ seatPrice, busName }) => {
         address: address,
         email: email,
         busName: busName,
-        counterMaster: selectedMaster
+        counterMaster: selectedMaster,
+        selectedRoute: selectedRoute
     };
 
     useEffect(() => {

@@ -68,6 +68,8 @@ const PaymentSuccess = () => {
             doc.text(`Phone: ${orderDetails.phone}`, leftColumnX, yPosition);
             yPosition += 10;
             doc.text(`Address: ${orderDetails.address}`, leftColumnX, yPosition);
+            yPosition += 10;
+            doc.text(`Route: ${orderDetails.selectedRoute}`, leftColumnX, yPosition);
 
             // Bus Information and Seat/Price Info (right column)
             yPosition = 110; // Reset Y position for the right column
