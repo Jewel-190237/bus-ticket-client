@@ -48,6 +48,12 @@ const AllService = () => {
         setSelectedDate(select);
     };
 
+    const disableDates = (current) => {
+        const today = moment().startOf('day');
+        const maxDate = moment().add(15, 'days').endOf('day');
+        return current && (current < today || current > maxDate);
+    };
+
     useEffect(() => {
         const fetchPaidSeats = async () => {
             try {
@@ -155,7 +161,12 @@ const AllService = () => {
                 <p className="text-center text-5xl">{allocatedSeats.join(', ')}</p>
             </div>
             <div className="flex justify-center mt-5">
-                <DatePicker className="p-3 w-full md:w-1/2 lg:w-[20%]" onChange={handleDateChange} format={dateFormatList} />
+                <DatePicker
+                    className="p-3 w-full md:w-1/2 lg:w-[20%]"
+                    onChange={handleDateChange}
+                    format={dateFormatList}
+                    disabledDate={disableDates} // Disable dates before today and after 15 days
+                />
             </div>
             <div className="section-gap flex flex-col items-center md:flex-row space-x-0 md:space-x-24 bus-container">
                 <div className="w-full md:w-[75%]">
