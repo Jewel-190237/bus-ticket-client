@@ -209,6 +209,61 @@ const Service = ({ seatPrice, busName, selectedRoute, selectedDate }) => {
         }
     };
 
+
+    const handleOffice = async () => {
+        if (!isLoggedIn()) {
+            navigate('/signup');
+            return;
+        }
+
+        try {
+            console.log(payment);
+
+            const response = await fetch("http://localhost:5000/paymentoffline", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payment),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+
+                // Show success message before redirecting
+                Swal.fire({
+                    title: "Payment Successful",
+                    text: "Your payment was processed successfully!",
+                    icon: "success",
+                    confirmButtonText: "OK",
+                }).then(() => {
+                    // Redirect after the SweetAlert is confirmed
+                    if (data.redirectUrl) {
+                        window.location.href = data.redirectUrl;
+                    }
+                });
+            } else {
+                Swal.fire({
+                    title: "Payment Failed",
+                    text: "There was an issue with processing your payment. Please try again.",
+                    icon: "error",
+                    confirmButtonText: "OK",
+                });
+            }
+        } catch (error) {
+            console.error("Error sending payment data:", error);
+
+            Swal.fire({
+                title: "Network Error",
+                text: "Failed to connect to the server. Please check your internet connection and try again.",
+                icon: "error",
+                confirmButtonText: "OK",
+            });
+        }
+    };
+
+
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
 
@@ -221,7 +276,7 @@ const Service = ({ seatPrice, busName, selectedRoute, selectedDate }) => {
                     <div className="my-10">
                         <p className="text-center text-5xl">{allocatedSeats.length}</p>
                         <p className="text-center text-5xl">{allocatedSeats.join(', ')}</p>
-                        
+
                     </div>
                     <h3 className="ticket-header">Select your seat</h3>
                     <div className="flex items-center justify-between font-medium text-[16px] md:text-2xl py-5 border-dashed border-b border-black">
@@ -374,8 +429,15 @@ const Service = ({ seatPrice, busName, selectedRoute, selectedDate }) => {
                                     </Select>
                                 </Form.Item>
 
-                                <button type="submit" className="button w-full !mt-10 !rounded-md">Continue</button>
+                                <button type="submit" className="button w-full !mt-10">Pay Online</button>
                             </Form>
+                            <div className="mt-5 md:mt-6 lg:mt-7 xl:mt-8">
+                                {role === 'admin' || (role === 'master') ? (
+                                    <div>
+                                        <button onClick={handleOffice} className="button w-full">Pay Offline</button>
+                                    </div>
+                                ) : null}
+                            </div>
                         </div>
                     </div>
                 </div>
