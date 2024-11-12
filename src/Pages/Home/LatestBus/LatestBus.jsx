@@ -4,6 +4,8 @@ import { TbArmchair } from "react-icons/tb";
 import { TbCoinTakaFilled } from "react-icons/tb";
 import SectionHeader from "../../Shared-file/SectionHeader";
 import axios from "axios";
+import moment from 'moment';
+
 
 const LatestBus = () => {
     const [busData, setBusData] = useState(null);
@@ -67,12 +69,16 @@ const LatestBus = () => {
     useEffect(() => {
         const fetchPaidSeats = async () => {
             try {
+                const selectedDate = moment().format('DD/MM/YYYY')
                 const token = localStorage.getItem('token');
                 const response = await axios.get(`http://localhost:5000/allocated-seats/${busName}`, {
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}` // Add Authorization header
                     },
+                    params: {
+                        selectedDate // Send selected date as a query parameter
+                    }
                 });
 
                 // Check if the response data is an array

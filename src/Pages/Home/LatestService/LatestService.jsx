@@ -10,7 +10,7 @@ const LatestService = () => {
     useEffect(() => {
         const fetchServiceData = async () => {
             try {
-                const response = await fetch('http://localhost:5000/buses'); // Replace with your actual API endpoint
+                const response = await fetch('http://localhost:5000/buses');
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
+import moment from 'moment';
 // eslint-disable-next-line react/prop-types
 const ServiceCard = ({ img, startTime = "11:00 AM", totalSeat, _id, busName }) => {
     const [remainingTime, setRemainingTime] = useState('');
@@ -59,6 +59,7 @@ const ServiceCard = ({ img, startTime = "11:00 AM", totalSeat, _id, busName }) =
 
     useEffect(() => {
         const fetchPaidSeats = async () => {
+            const selectedDate = moment().format('DD/MM/YYYY')
             try {
                 const token = localStorage.getItem('token');
                 const response = await axios.get(`http://localhost:5000/allocated-seats/${busName}`, {
@@ -66,6 +67,9 @@ const ServiceCard = ({ img, startTime = "11:00 AM", totalSeat, _id, busName }) =
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}` // Add Authorization header
                     },
+                    params: {
+                        selectedDate // Send selected date as a query parameter
+                    }
                 });
 
                 // Check if the response data is an array

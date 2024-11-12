@@ -156,10 +156,7 @@ const AllService = () => {
             <div className='pt-10'>
                 <SectionHeader heading={heading} description={description} />
             </div>
-            <div className="my-10 max-w-[1320px] mx-auto">
-                <p className="text-center text-5xl">{allocatedSeats.length}</p>
-                <p className="text-center text-5xl">{allocatedSeats.join(', ')}</p>
-            </div>
+            
             <div className="flex justify-center mt-5">
                 <DatePicker
                     className="p-3 w-full md:w-1/2 lg:w-[20%]"

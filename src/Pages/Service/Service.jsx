@@ -237,7 +237,6 @@ const Service = ({ seatPrice, busName, selectedRoute, selectedDate }) => {
                     icon: "success",
                     confirmButtonText: "OK",
                 }).then(() => {
-                    // Redirect after the SweetAlert is confirmed
                     if (data.redirectUrl) {
                         window.location.href = data.redirectUrl;
                     }
@@ -273,11 +272,7 @@ const Service = ({ seatPrice, busName, selectedRoute, selectedDate }) => {
             </div>
             <div className="bus-container mt-10 md:mt-20 flex flex-col gap-10 md:flex-row">
                 <div className="w-full md:w-[60%]">
-                    <div className="my-10">
-                        <p className="text-center text-5xl">{allocatedSeats.length}</p>
-                        <p className="text-center text-5xl">{allocatedSeats.join(', ')}</p>
-
-                    </div>
+                    
                     <h3 className="ticket-header">Select your seat</h3>
                     <div className="flex items-center justify-between font-medium text-[16px] md:text-2xl py-5 border-dashed border-b border-black">
                         <div className="select-seat space-x-2 md:space-x-4">
@@ -382,7 +377,6 @@ const Service = ({ seatPrice, busName, selectedRoute, selectedDate }) => {
                                 <Form.Item
                                     label="Email: "
                                     name="email"
-
                                 >
                                     <Input onChange={(e) => setEmail(e.target.value)} placeholder='Input your Email' type="email" className="p-4" />
                                 </Form.Item>
@@ -430,14 +424,15 @@ const Service = ({ seatPrice, busName, selectedRoute, selectedDate }) => {
                                 </Form.Item>
 
                                 <button type="submit" className="button w-full !mt-10">Pay Online</button>
+                                <div className="mt-5 md:mt-6 lg:mt-7 xl:mt-8">
+                                    {role === 'admin' || role === 'master' ? (
+                                        <div>
+                                            <button type="button" onClick={handleOffice} className="button w-full">Pay Offline</button>
+                                        </div>
+                                    ) : null}
+                                </div>
                             </Form>
-                            <div className="mt-5 md:mt-6 lg:mt-7 xl:mt-8">
-                                {role === 'admin' || (role === 'master') ? (
-                                    <div>
-                                        <button onClick={handleOffice} className="button w-full">Pay Offline</button>
-                                    </div>
-                                ) : null}
-                            </div>
+
                         </div>
                     </div>
                 </div>
